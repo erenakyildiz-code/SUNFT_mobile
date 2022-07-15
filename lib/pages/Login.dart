@@ -7,6 +7,9 @@
 import 'package:flutter/material.dart';
 import "package:properly_made_nft_market/Decoration/LoginDecoration.dart" as decoration;
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:properly_made_nft_market/models/User.dart';
+import 'package:properly_made_nft_market/providers/UserProvider.dart';
+import 'package:provider/provider.dart';
 
 class Login extends StatelessWidget {
   Login({Key? key}) : super(key: key);
@@ -15,6 +18,8 @@ class Login extends StatelessWidget {
   TextEditingController passwordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    final User? user = Provider.of<UserProvider>(context).user;
+    print(user);
     return Scaffold(
       body: Container(
         width: MediaQuery.of(context).size.width,
@@ -94,10 +99,9 @@ class Login extends StatelessWidget {
                       ),
                     ),
                     GestureDetector(
-                      onTap: ()=>{
+                      onTap: () async {
                         //@TODO take values and pass them to website.
-                        print(usernameController.text),
-                        print(passwordController.text),
+                        await context.read<UserProvider>().login(usernameController.text, passwordController.text);
                       },
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(15),
