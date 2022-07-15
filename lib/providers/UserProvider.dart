@@ -4,7 +4,7 @@ import "../services/AuthService.dart";
 import "../models/User.dart";
 
 class UserProvider with ChangeNotifier {
-  late User? _user;
+  User? _user;
   User? get user => _user;
 
   Future<void> login(String username, String password) async {

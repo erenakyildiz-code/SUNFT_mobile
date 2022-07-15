@@ -19,7 +19,6 @@ class Login extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final User? user = Provider.of<UserProvider>(context).user;
-    print(user);
     return Scaffold(
       body: Container(
         width: MediaQuery.of(context).size.width,
@@ -102,6 +101,18 @@ class Login extends StatelessWidget {
                       onTap: () async {
                         //@TODO take values and pass them to website.
                         await context.read<UserProvider>().login(usernameController.text, passwordController.text);
+
+                        if(user != null){
+                          Navigator.popAndPushNamed(context, "/MainPage");
+                        }
+                        else{
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                            content: Text("Wrong credentials.")
+                          )
+                        );
+                        }
+
                       },
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(15),
