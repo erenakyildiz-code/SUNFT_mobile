@@ -2,26 +2,28 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import "package:properly_made_nft_market/Decoration/ContainerDecoration/NFTcontainerDecoration.dart" as decoration;
 
-class NFTcontainer extends StatefulWidget {
-  //@todo needs the nft data as arguments.
-  const NFTcontainer({Key? key}) : super(key: key);
+import '../../models/Nft.dart';
+
+class NFTContainer extends StatefulWidget {
+  final NFT nft;
+  const NFTContainer({Key? key, required this.nft}) : super(key: key);
 
   @override
-  _NFTcontainerState createState() => _NFTcontainerState();
+  _NFTContainerState createState() => _NFTContainerState();
 }
 
-class _NFTcontainerState extends State<NFTcontainer> {
+class _NFTContainerState extends State<NFTContainer> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: ()=>{
+      onTap: () {
         //@todo route the user to nft Page. with the appropriate data.
-        print("PRESSED THE NFT CONTAINER")
+        print("PRESSED THE NFT CONTAINER");
       },
       child: Container(
         width: MediaQuery.of(context).size.width * 7/8,
         decoration: decoration.mainBoxDecoration,
-        margin: EdgeInsets.all(10),
+        margin: const EdgeInsets.all(10),
         child: Column(
           children: [
             Container(
@@ -30,9 +32,9 @@ class _NFTcontainerState extends State<NFTcontainer> {
 
               //@TODO get image from backend, if null show loading
                 child: ClipRRect(
-                  borderRadius: BorderRadius.vertical(top:Radius.circular(10)),
+                  borderRadius: const BorderRadius.vertical(top:Radius.circular(10)),
                   child: Image(
-                    image: NetworkImage("https://play-lh.googleusercontent.com/IeNJWoKYx1waOhfWF6TiuSiWBLfqLb18lmZYXSgsH1fvb8v1IYiZr5aYWe0Gxu-pVZX3"),
+                    image: NetworkImage(widget.nft.dataLink),
 
               ),
                 )
@@ -44,8 +46,7 @@ class _NFTcontainerState extends State<NFTcontainer> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      //@TODO get data from backend
-                      Text("name",
+                      Text(widget.nft.name,
                       style: decoration.NFTnameDecoration,)
                     ],
 
@@ -54,7 +55,7 @@ class _NFTcontainerState extends State<NFTcontainer> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       //@TODO get data from backend
-                      Text("Collection",
+                      Text(widget.nft.collectionName!,
                       style: decoration.NFTcollectionDecoration,)
                     ],
                   ),
@@ -68,7 +69,7 @@ class _NFTcontainerState extends State<NFTcontainer> {
                           padding: const EdgeInsets.only(left:8.0),
                           child: Column(
                             children: [
-                              Icon(
+                              const Icon(
                                 CupertinoIcons.bitcoin,
                                 color: Colors.white,
                               ),
@@ -90,7 +91,7 @@ class _NFTcontainerState extends State<NFTcontainer> {
                               ),
                               Text(
                                 //@TODO get data from backend
-                                "12344123123",
+                                widget.nft.likeCount.toString(),
                                 style: decoration.latestPriceDecoration,
                               )
                             ],

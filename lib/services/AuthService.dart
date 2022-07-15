@@ -9,7 +9,6 @@ var client = http.Client();
 class AuthService {
 
   Future<String> _getRefreshToken(String username, String password) async {
-    final prefs = await SharedPreferences.getInstance();
     final JWTRequest = http.Request("POST", Uri.parse("$AuthPath/jwt/create/"));
     JWTRequest.headers.addAll(<String, String>{
       "Accept": "application/json",
@@ -37,15 +36,7 @@ class AuthService {
     return accessToken;
   }
 
-  Future<User?> login(String username, String password) async {
-    var prefs = await SharedPreferences.getInstance();
-    if (prefs.getString("refreshToken") == null) {
-      String refreshToken = await _getRefreshToken(username, password);
-      if (refreshToken.isEmpty) {
-        return null;
-      }
-      prefs.setString("refreshToken", refreshToken);
-    }
+  Future<User?> getUserInfo() async {
     String accessToken = await _getAccessToken();
     final userInfoRequest = http.Request("GET", Uri.parse("$AuthPath/users/me/"));
     userInfoRequest.headers.addAll(<String, String>{
@@ -58,6 +49,20 @@ class AuthService {
     final user = User.fromJson(userInfoAsJson);
     return user;
   }
+
+  Future<User?> login(String username, String password) async {
+    var prefs = await SharedPreferences.getInstance();
+    if (!prefs.containsKey("refreshToken")) {
+      String refreshToken = await _getRefreshToken(username, password);
+      if (refreshToken.isEmpty) {
+        return null;
+      }
+      prefs.setString("refreshToken", refreshToken);
+    }
+    return await getUserInfo();
+  }
+
+
 }
 
 

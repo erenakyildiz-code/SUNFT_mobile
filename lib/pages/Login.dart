@@ -99,9 +99,7 @@ class Login extends StatelessWidget {
                     ),
                     GestureDetector(
                       onTap: () async {
-                        //@TODO take values and pass them to website.
                         await context.read<UserProvider>().login(usernameController.text, passwordController.text);
-
                         if(user != null){
                           Navigator.popAndPushNamed(context, "/MainPage");
                         }

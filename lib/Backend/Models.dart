@@ -1,33 +1,4 @@
-class userObject {
-  final String address;
-  final String name;
-  final String? profilePicture;
-  final String mailAddress;
-  final int totalNFTLikes;
-  final int totalCollectionLikes;
 
-  userObject({required this.address,required this.name,required this.profilePicture,required this.mailAddress, required this.totalNFTLikes,required this.totalCollectionLikes});
-
-  factory userObject.fromJson(Map<String, dynamic> json) {
-    return userObject(
-        address: json['uAddress'],
-        name: json['username'],
-        profilePicture: json['profilePicture'],
-        mailAddress: json['email'],
-        totalNFTLikes:  json['totalNFTLikes'],
-        totalCollectionLikes: json["totalCollectionLikes"]
-    );
-  }
-
-  Map<String, dynamic> toJson() => {
-    'UID' : address,
-    'name': name,
-    "profilePicture": profilePicture,
-    "mailAddress": mailAddress,
-    "totalNFTLikes": totalNFTLikes,
-    "totalCollectionLikes":totalCollectionLikes
-  };
-}
 
 class categories{
   final String name;
