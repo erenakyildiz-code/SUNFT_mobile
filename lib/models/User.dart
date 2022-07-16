@@ -1,8 +1,6 @@
 import 'dart:convert';
-
 import 'package:properly_made_nft_market/models/Nft.dart';
 import 'package:http/http.dart' as http;
-
 import '../variables.dart';
 
 class User {
@@ -10,10 +8,11 @@ class User {
   final String username;
   final String profilePicture;
   final String email;
-  final int NFTLikes;
-  final int collectionLikes;
+  int NFTLikes;
+  int collectionLikes;
 
-  User({required this.address,required this.username,required this.profilePicture,required this.email, required this.NFTLikes,required this.collectionLikes});
+  User({required this.address,required this.username,required this.profilePicture,
+    required this.email, required this.NFTLikes,required this.collectionLikes});
 
   String get pk => address;
 

@@ -3,6 +3,8 @@ import 'package:properly_made_nft_market/Decoration/AnimatedGradient.dart';
 import 'package:properly_made_nft_market/models/Nft.dart';
 import 'package:properly_made_nft_market/Decoration/NFTPageDecoration.dart' as decoration;
 import "package:properly_made_nft_market/components/transactionHistoryChart.dart";
+
+import '../models/TransactionHistory.dart';
 /*
 CONDITIONS:
   1- ON SALE (means item is on market also),
@@ -38,76 +40,83 @@ class _NFTPageState extends State<NFTPage> {
         title: Text(widget.NFTInfo.name),
         backgroundColor: Colors.transparent,
       ),
-        body: Container(
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height,
+        body: StreamBuilder<List<TransactionHistory>>(
+          stream: widget.NFTInfo.transactionHistory,
+          builder: (context, snapshot) {
+            // list of transaction histories is visible here
+            print(snapshot.data);
+            return Container(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height,
 
-          child: Stack(
-            children: [
-              Positioned(
-                  child: AnimatedGradient()
+              child: Stack(
+                children: [
+                  Positioned(
+                      child: AnimatedGradient()
+                  ),
+                  Positioned(
+                      child:
+                    SingleChildScrollView(
+                      physics: BouncingScrollPhysics(),
+                      child: SafeArea(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Image(
+                                image: NetworkImage(widget.NFTInfo.dataLink)
+                            ),
+                      Padding(
+                        padding: const EdgeInsets.only(left:8.0,top:8.0),
+                        child: Row(
+                          children: [
+                            Text(
+                              "Unique ID: ",
+                              style: decoration.addressBoxTextDecoration,
+                            ),
+                            Text(
+                              widget.NFTInfo.nID.toString(),
+                              style: decoration.addressBoxTextDecoration,
+                            ),
+                          ],
+                        ),
+                      ),
+                            Padding(
+                              padding: const EdgeInsets.only(left:8.0,top:8.0),
+                              child: Row(
+                                children: [
+                                  Text(
+                                    "Address: ",
+                                    style: decoration.addressOfNftText,
+                                  ),
+                                  Text(
+                                    widget.NFTInfo.address,
+                                    style: decoration.addressOfNftText,
+                                  ),
+                                ],
+                              ),
+                            ),
+
+
+
+                            Container(
+                              color: Colors.white,
+                              width: MediaQuery.of(context).size.width * 3/4,
+                              height: 3,
+                              margin: EdgeInsets.symmetric(vertical: 20),
+                            ),
+                            //price history container.
+                            TransactionHistoryChart(),
+                          ],
+                        ),
+                      ),
+                    )
+                  )
+
+                ],
               ),
-              Positioned(
-                  child:
-                SingleChildScrollView(
-                  physics: BouncingScrollPhysics(),
-                  child: SafeArea(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Image(
-                            image: NetworkImage(widget.NFTInfo.dataLink)
-                        ),
-                  Padding(
-                    padding: const EdgeInsets.only(left:8.0,top:8.0),
-                    child: Row(
-                      children: [
-                        Text(
-                          "Unique ID: ",
-                          style: decoration.addressBoxTextDecoration,
-                        ),
-                        Text(
-                          widget.NFTInfo.nID.toString(),
-                          style: decoration.addressBoxTextDecoration,
-                        ),
-                      ],
-                    ),
-                  ),
-                        Padding(
-                          padding: const EdgeInsets.only(left:8.0,top:8.0),
-                          child: Row(
-                            children: [
-                              Text(
-                                "Address: ",
-                                style: decoration.addressOfNftText,
-                              ),
-                              Text(
-                                widget.NFTInfo.address,
-                                style: decoration.addressOfNftText,
-                              ),
-                            ],
-                          ),
-                        ),
 
-
-
-                        Container(
-                          color: Colors.white,
-                          width: MediaQuery.of(context).size.width * 3/4,
-                          height: 3,
-                          margin: EdgeInsets.symmetric(vertical: 20),
-                        ),
-                        //price history container.
-                        TransactionHistoryChart(),
-                      ],
-                    ),
-                  ),
-                )
-              )
-
-            ],
-          ),
-
+            );
+          }
         ),
 
     );

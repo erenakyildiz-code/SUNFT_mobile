@@ -61,7 +61,7 @@ class _NFTContainerState extends State<NFTContainer> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       //@TODO get data from backend
-                      Text(widget.nft.collectionName!,
+                      Text(widget.nft.collectionName,
                       style: decoration.NFTcollectionDecoration,)
                     ],
                   ),
