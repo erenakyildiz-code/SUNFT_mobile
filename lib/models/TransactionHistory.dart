@@ -22,7 +22,7 @@ class TransactionHistory {
     "oldOwner": oldOwner,
     "newOwner": newOwner,
     "price": price,
-    "date": date.toString()
+    "time": date.toString()
   };
 
   @override
