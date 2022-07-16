@@ -34,6 +34,7 @@ class _NFTContainerState extends State<NFTContainer> {
                 child: ClipRRect(
                   borderRadius: const BorderRadius.vertical(top:Radius.circular(10)),
                   child: Image(
+                    fit: BoxFit.fitWidth,
                     image: NetworkImage(widget.nft.dataLink),
 
               ),
