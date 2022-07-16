@@ -47,12 +47,12 @@ class _ProfilePageState extends State<ProfilePage> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        const Padding(
-                          padding: EdgeInsets.only(top: 10.0, bottom: 10),
+                         Padding(
+                          padding: const EdgeInsets.only(top: 10.0, bottom: 10),
                           child: CircleAvatar(
                             //@TODO add image from backend here.
                             backgroundImage: NetworkImage(
-                                "https://ia801703.us.archive.org/6/items/twitter-default-pfp/e.png"),
+                                user.profilePicture),
                             radius: 50,
                           ),
                         ),
@@ -145,7 +145,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                     Padding(
                                       padding: const EdgeInsets.only(
                                           right: 20.0),
-                                      child: Text(user.totalNFTLikes.toString(),
+                                      child: Text(user.NFTLikes.toString(),
                                         style: decoration.balanceSheetText,
 
                                       ),

@@ -8,12 +8,12 @@ import '../variables.dart';
 class User {
   final String address;
   final String username;
-  final String? profilePicture;
+  final String profilePicture;
   final String email;
-  final int totalNFTLikes;
-  final int totalCollectionLikes;
+  final int NFTLikes;
+  final int collectionLikes;
 
-  User({required this.address,required this.username,required this.profilePicture,required this.email, required this.totalNFTLikes,required this.totalCollectionLikes});
+  User({required this.address,required this.username,required this.profilePicture,required this.email, required this.NFTLikes,required this.collectionLikes});
 
   String get pk => address;
 
@@ -23,13 +23,13 @@ class User {
         username: json['username'],
         profilePicture: json['profilePicture'],
         email: json['email'],
-        totalNFTLikes:  json['totalNFTLikes'],
-        totalCollectionLikes: json["totalCollectionLikes"]
+        NFTLikes:  json['NFTLikes'],
+        collectionLikes: json["collectionLikes"]
     );
   }
 
   @override
-  String toString() => "User(address: $address, username: $username, profilePicture: $profilePicture, email: $email, totalNFTLikes: $totalNFTLikes, totalCollectionLikes: $totalCollectionLikes)";
+  String toString() => "User(address: $address, username: $username, profilePicture: $profilePicture, email: $email, NFTLikes: $NFTLikes, collectionLikes: $collectionLikes)";
 
 
 
