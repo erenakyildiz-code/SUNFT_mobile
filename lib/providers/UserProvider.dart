@@ -5,21 +5,29 @@ import "../models/User.dart";
 
 class UserProvider with ChangeNotifier {
   User? _user;
+  bool _loading = false;
+
   User? get user => _user;
+  bool get loading => _loading;
 
   Future<bool> login(String username, String password) async {
-    _user = await AuthService().login(username, password);
+    _loading = true;
     notifyListeners();
-    return (_user != null);
+    _user = await AuthService().login(username, password);
+    _loading = false;
+    notifyListeners();
+    return _user != null;
   }
 
-  Future<void> logout() async {
+  Future<bool> logout() async {
     _user = null;
+    _loading = true;
+    notifyListeners();
     var prefs = await SharedPreferences.getInstance();
     prefs.remove("refreshToken");
+    _loading = false;
     notifyListeners();
+    return _user == null;
   }
-
-
 
 }

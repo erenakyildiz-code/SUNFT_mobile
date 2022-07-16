@@ -52,17 +52,13 @@ class AuthService {
 
   Future<User?> login(String username, String password) async {
     var prefs = await SharedPreferences.getInstance();
-
-      String refreshToken = await _getRefreshToken(username, password);
-      if (refreshToken.isEmpty) {
-        return null;
-      }
-      prefs.setString("refreshToken", refreshToken);
-
+    String refreshToken = await _getRefreshToken(username, password);
+    if (refreshToken.isEmpty) {
+      return null;
+    }
+    prefs.setString("refreshToken", refreshToken);
     return await getUserInfo();
   }
-
-
 }
 
 

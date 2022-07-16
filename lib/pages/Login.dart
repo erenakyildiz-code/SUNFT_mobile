@@ -4,6 +4,8 @@
 // User can also press Browse without logging in button to be able to browse everything without logging in.
 
 
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import "package:properly_made_nft_market/Decoration/LoginDecoration.dart" as decoration;
 import 'package:carousel_slider/carousel_slider.dart';
@@ -18,9 +20,9 @@ class Login extends StatelessWidget {
   TextEditingController passwordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    final User? user = Provider.of<UserProvider>(context).user;
+    final bool loginLoading = Provider.of<UserProvider>(context).loading;
     return Scaffold(
-      body: Container(
+      body: SizedBox(
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
         child: Stack(
@@ -34,7 +36,7 @@ class Login extends StatelessWidget {
                 child: Column(
                   children: [
                     Padding(
-                      padding:EdgeInsets.only(top: 100),
+                      padding: const EdgeInsets.only(top: 100),
                       child: CarouselSlider(
                         options: CarouselOptions(
                           enlargeCenterPage: true,
@@ -99,26 +101,25 @@ class Login extends StatelessWidget {
                     ),
                     GestureDetector(
                       onTap: () async {
-                        bool zucc = await context.read<UserProvider>().login(usernameController.text, passwordController.text);
-
-                        if(zucc){
-                          Navigator.popAndPushNamed(context, "/MainPage");
+                        if (!loginLoading) {
+                          bool loginSuccess = await context.read<UserProvider>().login(usernameController.text, passwordController.text);
+                          if(loginSuccess){
+                            Navigator.popAndPushNamed(context, "/MainPage");
+                          }
+                          else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                    content: Text("Wrong credentials.")
+                                )
+                            );
+                          }
                         }
-                        else{
-                        ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                            content: Text("Wrong credentials.")
-                          )
-                        );
-                        }
-
                       },
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(15),
                         child: Container(
                           width:  MediaQuery.of(context).size.width * 1/2 ,
                           height: 50,
-
                           alignment: Alignment.bottomRight,
                           decoration: const BoxDecoration(
                             gradient: LinearGradient(
@@ -132,17 +133,12 @@ class Login extends StatelessWidget {
                             ),
                           ),
                           child: Center(
-                            child:  Text(
+                            child:  !loginLoading ? Text(
                               "Submit",
                               style: decoration.loginSubmitButton,
-                            ),
+                            ) : const CircularProgressIndicator(),
                           ),
                         ),
-
-
-
-
-
                       ),
                     ),
 
@@ -192,8 +188,6 @@ class Login extends StatelessWidget {
                         ],
                       ),
                     )
-
-
                   ],
                 ),
               ),
@@ -202,14 +196,9 @@ class Login extends StatelessWidget {
 
         ),
       ),
-
-
-
     );
   }
 }
-
-
 
 class AnimatedGradient extends StatefulWidget {
   @override

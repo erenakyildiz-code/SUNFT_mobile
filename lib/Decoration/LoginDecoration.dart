@@ -39,10 +39,13 @@ var loginUsernameFieldInputDecoration = InputDecoration(
       color: loginButtonColors
   ),
 );
-var loginSubmitButton = TextStyle(
-  color: fieldColors,
-  fontSize: 30,
+
+TextStyle loginSubmitButton = TextStyle(
+    color: fieldColors,
+    fontSize: 30,
 );
+
+
 var loginPasswordFieldInputDecoration = InputDecoration(
   hintText: "Password",
   border: InputBorder.none,
