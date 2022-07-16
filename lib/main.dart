@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:properly_made_nft_market/pages/NFTPage.dart';
 import 'package:properly_made_nft_market/pages/Register.dart';
 import 'package:properly_made_nft_market/pages/Login.dart';
 import 'package:properly_made_nft_market/pages/MainApplication.dart';

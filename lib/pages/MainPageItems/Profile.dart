@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import "package:properly_made_nft_market/Decoration/MainPageItemsDecoration/ProfileDecoration.dart" as decoration;
+import "package:properly_made_nft_market/decoration/MainPageItemsDecoration/ProfileDecoration.dart" as decoration;
 import 'package:properly_made_nft_market/models/Nft.dart';
-import 'package:properly_made_nft_market/pages/Containers/NFTContainer.dart';
+import 'package:properly_made_nft_market/components/Containers/NFTContainer.dart';
 import 'package:provider/provider.dart';
 
 import '../../models/User.dart';

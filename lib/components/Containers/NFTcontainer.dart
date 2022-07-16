@@ -2,7 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import "package:properly_made_nft_market/Decoration/ContainerDecoration/NFTcontainerDecoration.dart" as decoration;
 
+
 import '../../models/Nft.dart';
+import '../../pages/NFTPage.dart';
 
 class NFTContainer extends StatefulWidget {
   final NFT nft;
@@ -18,7 +20,10 @@ class _NFTContainerState extends State<NFTContainer> {
     return GestureDetector(
       onTap: () {
         //@todo route the user to nft Page. with the appropriate data.
-        print("PRESSED THE NFT CONTAINER");
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => NFTPage(NFTInfo: widget.nft))
+        );
       },
       child: Container(
         width: MediaQuery.of(context).size.width * 7/8,
