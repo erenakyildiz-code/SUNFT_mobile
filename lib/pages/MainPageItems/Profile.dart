@@ -37,7 +37,6 @@ class _ProfilePageState extends State<ProfilePage> with SingleTickerProviderStat
      super.initState();
      _tabController = TabController(vsync: this, length: tabs.length);
      _handleTabChange = () {
-       print(_tabController.index);
        setState(() {
          _index = _tabController.index;
        });
@@ -191,7 +190,7 @@ class _ProfilePageState extends State<ProfilePage> with SingleTickerProviderStat
             if (_index == 0)
               ListViewContainer<NFT, NFTContainer>(parameterizedContainerConstructor: NFTContainer.parameterized, future: user.ownedNFTs),
             if (_index == 1)
-              Text('adfasd')
+              ListViewContainer<NFT, NFTContainer>(parameterizedContainerConstructor: NFTContainer.parameterized, future: user.likedNFTs),
     ]
         ));
           }

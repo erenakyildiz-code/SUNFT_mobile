@@ -41,6 +41,11 @@ class User {
   List<NFT> ownedNFTs = JSONList.map((item) => NFT.fromJson(item)).toList();
   return ownedNFTs;
 }
+  Future<List<NFT>> get likedNFTs async {
+    List JSONList = await getRequest("favorites", {"user": pk});
+    List<NFT> ownedNFTs = JSONList.map((item) => NFT.fromJson(item)).toList();
+    return ownedNFTs;
+  }
 
   StreamController<List<NFT>> get ownedNFTsAsStreamController {
     
@@ -58,12 +63,10 @@ class User {
     }
 
     void startStream() {
-      print("startSteram");
       timer = Timer.periodic(const Duration(milliseconds: refreshRate), getData);
     }
     
     void resetStream() {
-      print("resetStream");
       ownedNFTs = <NFT>[];
       timer?.cancel();
       timer = null;
@@ -89,6 +92,7 @@ class User {
 
   Future<bool> likeNFT(Map<String, dynamic> NFTInfo) async {
     bool success = await postRequest("/favorites", {...NFTInfo, "user": pk});
+    print(success);
     return success;
   }
 }

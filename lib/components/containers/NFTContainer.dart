@@ -1,10 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import "package:properly_made_nft_market/Decoration/ContainerDecoration/NFTcontainerDecoration.dart" as decoration;
+import 'package:provider/provider.dart';
 
 
 import '../../models/Nft.dart';
+import '../../models/User.dart';
 import '../../pages/NFTPage.dart';
+import '../../providers/UserProvider.dart';
 
 class NFTContainer extends StatefulWidget {
   final NFT nft;
@@ -18,6 +21,9 @@ class NFTContainer extends StatefulWidget {
 class _NFTContainerState extends State<NFTContainer> {
   @override
   Widget build(BuildContext context) {
+    final User? user = Provider
+        .of<UserProvider>(context)
+        .user;
     return GestureDetector(
       onTap: () {
         //@todo route the user to nft Page. with the appropriate data.
@@ -93,9 +99,16 @@ class _NFTContainerState extends State<NFTContainer> {
                           padding: const EdgeInsets.only(right: 8.0),
                           child: Column(
                             children: [
-                              Icon(
-                                CupertinoIcons.heart_fill,
-                                color: Colors.white,
+                              GestureDetector(
+                                onTap:()async {
+                                  print("Supossed to like");
+                                  print(user);
+                                  await user?.likeNFT(widget.nft.pk);
+                                },
+                                child: Icon(
+                                  CupertinoIcons.heart_fill,
+                                  color: Colors.white,
+                                ),
                               ),
                               Text(
                                 //@TODO get data from backend
