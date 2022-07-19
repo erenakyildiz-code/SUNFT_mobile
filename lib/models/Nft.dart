@@ -1,4 +1,6 @@
 import '../variables.dart';
+import "../backend/requests.dart";
+import 'TransactionHistory.dart';
 
 class NFT {
   final String address;
@@ -7,13 +9,16 @@ class NFT {
   final String? description;
   final String metaDataType;
   final String dataLink;
-  final String? collectionName;
-  final String? creatorName;
-  final String currentOwner;
+  final String collectionName;
+  final String creator;
+  final String owner;
   final int marketStatus;
-  final int likeCount;
+  int likeCount;
 
-  NFT({ required this.address, required this.nID,required this.name,required this.description,required this.metaDataType,required this.dataLink,required this.collectionName, this.creatorName,required this.currentOwner,required this.marketStatus, this.likeCount = 0 });
+  NFT({ required this.address, required this.nID,required this.name,
+    required this.description,required this.metaDataType,required this.dataLink,
+    required this.collectionName, required this.creator,required this.owner,
+    required this.marketStatus, this.likeCount = 0 });
 
   Map<String, dynamic> get pk {
     return { "address": address, "nID": nID };
@@ -23,7 +28,7 @@ class NFT {
   String toString() => "NFT(address: $address, nID: $nID, name: $name, "
       "description: $description, metaDataType: $metaDataType, "
       "dataLink: $dataLink, collectionName: $collectionName, "
-      "creatorName: creatorName, currentOwner: $currentOwner, "
+      "creatorName: creatorName, currentOwner: $owner, "
       "marketStatus: $marketStatus, likeCount: $likeCount)";
 
   factory NFT.fromJson(Map<String, dynamic> json) {
@@ -35,8 +40,8 @@ class NFT {
       metaDataType: json['metaDataType'],
       dataLink: "$ImagePath${json['nftFile']}",
       collectionName: json['collectionName'],
-      creatorName: json['creator'],
-      currentOwner: json['currentOwner'],
+      creator: json['creator'],
+      owner: json['currentOwner'],
       marketStatus: json['marketStatus'],
       likeCount: json["numLikes"],
     );
@@ -50,10 +55,9 @@ class NFT {
     'metaDataType':metaDataType,
     'dataLink': dataLink,
     'collectionName': collectionName,
-    'creatorName': creatorName,
-    'currentOwner': currentOwner,
+    'creatorName': creator,
+    'currentOwner': owner,
     'marketStatus': marketStatus,
-    "likeCount": likeCount
   };
 
   @override
@@ -62,14 +66,25 @@ class NFT {
       return (other.address == address && other.nID == nID &&
           other.name == name && other.description == description &&
           other.metaDataType == metaDataType && other.dataLink == dataLink &&
-          other.collectionName == collectionName && other.creatorName == creatorName &&
-          other.currentOwner == currentOwner && other.marketStatus == marketStatus &&
+          other.collectionName == collectionName && other.creator == creator &&
+          other.owner == owner && other.marketStatus == marketStatus &&
           other.likeCount == likeCount);
     }
     return false;
   }
 
-
-
+  Stream<List<TransactionHistory>> get transactionHistory async* {
+    List<TransactionHistory> transactionHistory = <TransactionHistory>[];
+    while (true) {
+      List JSONList = await getRequest("transactionHistory", pk);
+      List<TransactionHistory> newData = JSONList.map((item) => TransactionHistory.fromJson(item)).toList();
+      if (newData.length != transactionHistory.length ||
+          !newData.every((element) => transactionHistory.contains(element))) {
+        transactionHistory = newData;
+        yield transactionHistory;
+      }
+      await Future.delayed(const Duration(milliseconds: refreshRate));
+    }
+  }
 
 }

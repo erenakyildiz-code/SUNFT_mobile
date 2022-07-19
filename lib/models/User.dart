@@ -1,19 +1,24 @@
-import 'dart:convert';
+import 'dart:async';
 
 import 'package:properly_made_nft_market/models/Nft.dart';
-import 'package:http/http.dart' as http;
-
 import '../variables.dart';
+import '../backend/requests.dart';
 
 class User {
   final String address;
   final String username;
   final String profilePicture;
   final String email;
-  final int NFTLikes;
-  final int collectionLikes;
+  int NFTLikes;
+  int collectionLikes;
 
-  User({required this.address,required this.username,required this.profilePicture,required this.email, required this.NFTLikes,required this.collectionLikes});
+  User(
+      {required this.address,
+      required this.username,
+      required this.profilePicture,
+      required this.email,
+      required this.NFTLikes,
+      required this.collectionLikes});
 
   String get pk => address;
 
@@ -23,34 +28,67 @@ class User {
         username: json['username'],
         profilePicture: json['profilePicture'],
         email: json['email'],
-        NFTLikes:  json['NFTLikes'],
-        collectionLikes: json["collectionLikes"]
-    );
+        NFTLikes: json['NFTLikes'],
+        collectionLikes: json["collectionLikes"]);
   }
 
   @override
-  String toString() => "User(address: $address, username: $username, profilePicture: $profilePicture, email: $email, NFTLikes: $NFTLikes, collectionLikes: $collectionLikes)";
+  String toString() =>
+      "User(address: $address, username: $username, profilePicture: $profilePicture, email: $email, NFTLikes: $NFTLikes, collectionLikes: $collectionLikes)";
 
+  Future<List<NFT>> get ownedNFTs async {
+  List JSONList = await getRequest("nfts", {"currentOwner": pk});
+  List<NFT> ownedNFTs = JSONList.map((item) => NFT.fromJson(item)).toList();
+  return ownedNFTs;
+}
 
-
-  Stream<List<NFT>> get ownedNFTs async* {
+  StreamController<List<NFT>> get ownedNFTsAsStreamController {
+    
+    late StreamController<List<NFT>> controller;
     List<NFT> ownedNFTs = <NFT>[];
-    while (true) {
-      final request = http.Request("GET", Uri.parse("$APIPath/nfts/?currentOwner=$pk"));
-      request.headers.addAll(<String, String>{
-        "Accept": "application/json",
-        "Content-Type": "application/json",
-      });
-      final response = await request.send();
-      final List JSONList = json.decode(await response.stream.bytesToString());
-      List<NFT> newData = JSONList.map((item) => NFT.fromJson(item)).toList();
-      if (newData.length != ownedNFTs.length || !newData.every((element) => ownedNFTs.contains(element))) {
-        ownedNFTs = newData;
-        yield ownedNFTs;
+    Timer? timer;
+
+    void getData(_) async {
+      List<NFT> newData = await this.ownedNFTs;
+      if (newData.length != ownedNFTs.length ||
+          !newData.every((element) => ownedNFTs.contains(element))) {
+            ownedNFTs = newData;
+            controller.add(ownedNFTs);
       }
-      await Future.delayed(const Duration(milliseconds: 500));
     }
+
+    void startStream() {
+      print("startSteram");
+      timer = Timer.periodic(const Duration(milliseconds: refreshRate), getData);
+    }
+    
+    void resetStream() {
+      print("resetStream");
+      ownedNFTs = <NFT>[];
+      timer?.cancel();
+      timer = null;
+    }
+
+
+    controller = StreamController<List<NFT>>(
+        onListen: startStream,
+        onPause: resetStream,
+        onResume: startStream,
+        onCancel: resetStream);
+
+    return controller;
   }
 
 
+
+  Future<bool> userLikedNFT(Map<String, dynamic> NFTInfo) async {
+    final List JSONList =
+        await getRequest("favorites", {...NFTInfo, "user": pk});
+    return JSONList.isNotEmpty;
+  }
+
+  Future<bool> likeNFT(Map<String, dynamic> NFTInfo) async {
+    bool success = await postRequest("/favorites", {...NFTInfo, "user": pk});
+    return success;
+  }
 }

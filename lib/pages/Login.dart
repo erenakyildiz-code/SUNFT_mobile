@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:properly_made_nft_market/Decoration/AnimatedGradient.dart';
 import "package:properly_made_nft_market/Decoration/LoginDecoration.dart" as decoration;
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:properly_made_nft_market/models/NftCollection.dart';
 import 'package:properly_made_nft_market/models/User.dart';
 import 'package:properly_made_nft_market/providers/UserProvider.dart';
 import 'package:provider/provider.dart';

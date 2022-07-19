@@ -9,6 +9,7 @@ import '../../pages/NFTPage.dart';
 class NFTContainer extends StatefulWidget {
   final NFT nft;
   const NFTContainer({Key? key, required this.nft}) : super(key: key);
+  const NFTContainer.parameterized(this.nft, Key? key): super(key: key);
 
   @override
   _NFTContainerState createState() => _NFTContainerState();
@@ -30,6 +31,7 @@ class _NFTContainerState extends State<NFTContainer> {
         decoration: decoration.mainBoxDecoration,
         margin: const EdgeInsets.all(10),
         child: Column(
+          mainAxisSize: MainAxisSize.min,
           children: [
             Container(
 
@@ -61,7 +63,7 @@ class _NFTContainerState extends State<NFTContainer> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       //@TODO get data from backend
-                      Text(widget.nft.collectionName!,
+                      Text(widget.nft.collectionName,
                       style: decoration.NFTcollectionDecoration,)
                     ],
                   ),
@@ -87,7 +89,7 @@ class _NFTContainerState extends State<NFTContainer> {
                             ],
                           ),
                         ),
-                        Padding(
+                            Padding(
                           padding: const EdgeInsets.only(right: 8.0),
                           child: Column(
                             children: [
