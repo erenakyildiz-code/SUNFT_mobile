@@ -1,7 +1,5 @@
 import '../variables.dart';
-import 'dart:convert';
-import 'package:http/http.dart' as http;
-
+import "../backend/requests.dart";
 import 'TransactionHistory.dart';
 
 class NFT {
@@ -78,20 +76,14 @@ class NFT {
   Stream<List<TransactionHistory>> get transactionHistory async* {
     List<TransactionHistory> transactionHistory = <TransactionHistory>[];
     while (true) {
-      final request = http.Request("GET", Uri.parse("$APIPath/transactionHistory/?address=$address&nID=$nID"));
-      request.headers.addAll(<String, String>{
-        "Accept": "application/json",
-        "Content-Type": "application/json",
-      });
-      final response = await request.send();
-      final List JSONList = json.decode(await response.stream.bytesToString());
+      List JSONList = await getRequest("transactionHistory", pk);
       List<TransactionHistory> newData = JSONList.map((item) => TransactionHistory.fromJson(item)).toList();
       if (newData.length != transactionHistory.length ||
           !newData.every((element) => transactionHistory.contains(element))) {
         transactionHistory = newData;
         yield transactionHistory;
       }
-      await Future.delayed(const Duration(milliseconds: 500));
+      await Future.delayed(const Duration(milliseconds: refreshRate));
     }
   }
 
