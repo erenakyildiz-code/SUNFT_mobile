@@ -9,12 +9,15 @@ extension IsOk on http.StreamedResponse {
 }
 
 
-Future<List> getRequest(String path, Map<String, dynamic> parameters) async {
+Future<List> getRequest(String path, Map<String, dynamic>?parameters) async {
   List JSONList = [];
   String requestURL = "$APIPath/$path/?";
-  for (String key in parameters.keys) {
-    requestURL += "$key=${parameters[key].toString()}&";
+  if(parameters != null){
+    for (String key in parameters.keys) {
+      requestURL += "$key=${parameters[key].toString()}&";
+    }
   }
+
   requestURL = requestURL.substring(0, requestURL.length - 1);
   final request = http.Request("GET", Uri.parse(requestURL));
   request.headers.addAll(<String, String>{

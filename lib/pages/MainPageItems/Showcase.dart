@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:properly_made_nft_market/components/Containers/CategoryContainer.dart';
+import 'package:properly_made_nft_market/components/ListViewContainer.dart';
 import "package:properly_made_nft_market/decoration/MainPageItemsDecoration/ShowcaseDecoration.dart" as decoration;
 import "package:properly_made_nft_market/components/Containers/NFTCollectionContainer.dart";
+import 'package:properly_made_nft_market/helpers/CategoryHelper.dart';
+import 'package:properly_made_nft_market/helpers/NFTCollectionHelper.dart';
+import 'package:properly_made_nft_market/models/Category.dart';
+import 'package:properly_made_nft_market/models/NftCollection.dart';
 class Showcase extends StatefulWidget {
   const Showcase({Key? key}) : super(key: key);
 
@@ -34,67 +40,14 @@ class _ShowcaseState extends State<Showcase> {
               ),
             ),
             Container(
-              child: SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                physics: BouncingScrollPhysics(),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  //@TODO get data from backend
-                  children: [
-                    Container(
-                      margin: EdgeInsets.symmetric(horizontal: 10),
-                      width: MediaQuery
-                          .of(context)
-                          .size
-                          .width * 1/3,
-                      height: MediaQuery
-                          .of(context)
-                          .size
-                          .width * 1/3,
-                      decoration: decoration.categoryDecoration,
-                    ),Container(
-                      margin: EdgeInsets.symmetric(horizontal: 10),
-                      width: MediaQuery
-                          .of(context)
-                          .size
-                          .width * 1/3,
-                      height: MediaQuery
-                          .of(context)
-                          .size
-                          .width * 1/3,
-                      decoration: decoration.categoryDecoration,
-                    ),
-                    Container(
-                      margin: EdgeInsets.symmetric(horizontal: 10),
-                      width: MediaQuery
-                          .of(context)
-                          .size
-                          .width * 1/3,
-                      height: MediaQuery
-                          .of(context)
-                          .size
-                          .width * 1/3,
-                      decoration: decoration.categoryDecoration,
-                    ),
-                    Container(
-                      margin: EdgeInsets.symmetric(horizontal: 10),
-                      width: MediaQuery
-                          .of(context)
-                          .size
-                          .width * 1/3,
-                      height: MediaQuery
-                          .of(context)
-                          .size
-                          .width * 1/3,
-                      decoration: decoration.categoryDecoration,
-                    )
+              height: MediaQuery
+                  .of(context)
+                  .size
+                  .width * 1/3,
 
-
-
-                  ],
-                ),
-
-              ),
+              child: ListViewContainer<Category,CategoryContainer>(
+                parameterizedContainerConstructor: CategoryContainer.parameterized,
+                future: getCategories(null),direction: Axis.horizontal,)
             ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 8.0),
@@ -103,17 +56,15 @@ class _ShowcaseState extends State<Showcase> {
 
               ),
             ),
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              physics: BouncingScrollPhysics(),
-              child: Row(
-                children: [
-                  NFTCollectionContainer(),
-                  NFTCollectionContainer(),
-                  NFTCollectionContainer(),
+            Container(
+                height: MediaQuery
+                    .of(context)
+                    .size
+                    .width * 1/3,
 
-                ],
-              ),
+                child: ListViewContainer<NFTCollection,NFTCollectionContainer>(
+                  parameterizedContainerConstructor: NFTCollectionContainer.parameterized,
+                  future: getTrendingCollections(null),direction: Axis.horizontal,)
             ),
           ],
         ),

@@ -7,8 +7,9 @@ class ListViewContainer<Model extends Object, Container extends Widget> extends 
   final Container Function(Model m, Key? k) parameterizedContainerConstructor;
   final Stream<List<Model>>? stream;
   final Future<List<Model>>? future;
+  final Axis direction;
   ListViewContainer({Key? key, required this.parameterizedContainerConstructor,
-     this.stream, this.future}): super(key: key);
+     this.stream, this.future, this.direction = Axis.vertical}): super(key: key);
   final ScrollController scroller = ScrollController();
 
 
@@ -17,11 +18,16 @@ class ListViewContainer<Model extends Object, Container extends Widget> extends 
   }
 
   Widget dataLoading() {
-    return const CircularProgressIndicator();
+    return const Padding(
+      padding: EdgeInsets.all(40.0),
+      child: Center(child: SizedBox( width: 50, height:50, child: const CircularProgressIndicator())),
+    );
   }
 
   Widget dataSuccess(data) {
     return ListView.builder(
+
+      scrollDirection: direction,
       controller: scroller,
         physics: const BouncingScrollPhysics(),
         shrinkWrap: true,

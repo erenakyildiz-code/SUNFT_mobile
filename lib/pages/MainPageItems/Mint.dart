@@ -10,7 +10,19 @@ class Mint extends StatefulWidget {
 class _MintState extends State<Mint> {
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        SafeArea(child: Padding(
+          padding: const EdgeInsets.only(top:10.0),
+          child: Text(
+            "Minting",
+            textAlign: TextAlign.center,
+            
+          ),
+        ),
+        ),
+      ],
     );
   }
 }

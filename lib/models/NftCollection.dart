@@ -1,3 +1,4 @@
+import '../variables.dart';
 import 'Nft.dart';
 import "../backend/requests.dart";
 
@@ -21,7 +22,7 @@ class NFTCollection {
     return NFTCollection(
       address: json["address"],
       name: json['name'],
-      collectionImage: json['collectionImage'],
+      collectionImage: "$ImagePath${json['collectionImage']}",
       description: json['description'],
       numLikes: json["numLikes"],
       owner: json["owner"],
@@ -29,6 +30,7 @@ class NFTCollection {
       NFTLikes: json["NFTLikes"],
     );
   }
+
 
   Map<String, dynamic> toJson() => {
     'address': address,

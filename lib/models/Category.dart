@@ -1,4 +1,5 @@
 import '../backend/requests.dart';
+import '../variables.dart';
 import 'NftCollection.dart';
 
 class Category {
@@ -18,4 +19,13 @@ class Category {
 
   @override
   String toString() => "Category(name: $name, background: $backgroundPicture, foreground: $foregroundPicture)";
+
+  factory Category.fromJson(Map<String, dynamic> json) {
+    return Category(
+        name : json['name'],
+        backgroundPicture : "$ImagePath${json['backgroundPicture']}",
+        foregroundPicture : "$ImagePath${json['foregroundPicture']}",
+    );
+
+  }
 }
