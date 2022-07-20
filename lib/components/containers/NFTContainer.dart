@@ -19,11 +19,35 @@ class NFTContainer extends StatefulWidget {
 }
 
 class _NFTContainerState extends State<NFTContainer> {
+  bool? userLikedNft;
+  void _getUserLikedNft(user) async {
+    var userLike = await user.userLikedNFT(widget.nft.pk);
+    setState(() {
+      userLikedNft = userLike;
+    });
+  }
+
+  @override
+  void initState() {
+    Future.delayed(Duration.zero,() {
+      final User? user = Provider
+          .of<UserProvider>(context,listen: false)
+          .user;
+      if(user != null){
+        _getUserLikedNft(user);
+      }
+    });
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
+
     final User? user = Provider
         .of<UserProvider>(context)
         .user;
+
     return GestureDetector(
       onTap: () {
         //@todo route the user to nft Page. with the appropriate data.
@@ -101,17 +125,29 @@ class _NFTContainerState extends State<NFTContainer> {
                             children: [
                               GestureDetector(
                                 onTap:()async {
-                                  print("Supossed to like");
-                                  print(user);
-                                  await user?.likeNFT(widget.nft.pk);
+
+                                  setState(() {
+                                    if(userLikedNft!){
+                                      widget.nft.likeCount -= 1;
+                                    }
+                                    else{
+                                      widget.nft.likeCount += 1;
+
+                                    }
+                                    userLikedNft = !userLikedNft!;
+                                  });
+
+                                  await user!.likeNFT(widget.nft.pk,!userLikedNft!,context);
                                 },
-                                child: Icon(
+                                child: const Icon(
                                   CupertinoIcons.heart_fill,
                                   color: Colors.white,
-                                ),
-                              ),
+                                )
+
+
+
+                          ),
                               Text(
-                                //@TODO get data from backend
                                 widget.nft.likeCount.toString(),
                                 style: decoration.latestPriceDecoration,
                               )

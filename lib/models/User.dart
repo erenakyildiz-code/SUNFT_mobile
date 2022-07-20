@@ -1,6 +1,9 @@
 import 'dart:async';
 
+import 'package:flutter/cupertino.dart';
 import 'package:properly_made_nft_market/models/Nft.dart';
+import 'package:provider/provider.dart';
+import '../providers/UserProvider.dart';
 import '../variables.dart';
 import '../backend/requests.dart';
 
@@ -90,9 +93,13 @@ class User {
     return JSONList.isNotEmpty;
   }
 
-  Future<bool> likeNFT(Map<String, dynamic> NFTInfo) async {
-    bool success = await postRequest("/favorites", {...NFTInfo, "user": pk});
-    print(success);
-    return success;
+  Future<bool> likeNFT(Map<String, dynamic> NFTInfo,bool liked,BuildContext context) async {
+    if(liked){
+      return (await deleteRequest("favorites", {...NFTInfo, "user": pk}));
+    }
+
+    return (await postRequest("favorites", {...NFTInfo, "user": pk}));
+
+
   }
 }
