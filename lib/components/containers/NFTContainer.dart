@@ -9,6 +9,7 @@ import '../../models/User.dart';
 import '../../pages/NFTPage.dart';
 import '../../providers/UserProvider.dart';
 
+bool oldState = false;
 class NFTContainer extends StatefulWidget {
   final NFT nft;
   const NFTContainer({Key? key, required this.nft}) : super(key: key);
@@ -19,6 +20,7 @@ class NFTContainer extends StatefulWidget {
 }
 
 class _NFTContainerState extends State<NFTContainer> {
+
   bool? userLikedNft;
   void _getUserLikedNft(user) async {
     var userLike = await user.userLikedNFT(widget.nft.pk);
@@ -129,19 +131,21 @@ class _NFTContainerState extends State<NFTContainer> {
                                   setState(() {
                                     if(userLikedNft!){
                                       widget.nft.likeCount -= 1;
+                                      oldState = true;
                                     }
                                     else{
                                       widget.nft.likeCount += 1;
-
+                                      oldState = false;
                                     }
                                     userLikedNft = !userLikedNft!;
                                   });
 
                                   await user!.likeNFT(widget.nft.pk,!userLikedNft!,context);
+                                  await context.read<UserProvider>().update();
                                 },
-                                child: const Icon(
+                                child: Icon(
                                   CupertinoIcons.heart_fill,
-                                  color: Colors.white,
+                                  color: (userLikedNft == null) ?( (oldState) ? Colors.white : Colors.red) : (userLikedNft!) ? Colors.red:Colors.white,
                                 )
 
 
