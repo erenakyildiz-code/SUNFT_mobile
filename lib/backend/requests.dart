@@ -56,6 +56,7 @@ Future<bool> deleteRequest(String path, Map<String, dynamic>?parameters) async {
   }
 
   requestURL = requestURL.substring(0, requestURL.length - 1);
+  print(requestURL);
   final request = http.Request("DELETE", Uri.parse(requestURL));
   request.headers.addAll(<String, String>{
     "Accept": "application/json",

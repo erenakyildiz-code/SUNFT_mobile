@@ -35,7 +35,44 @@ class _MintState extends State<Mint> {
             style: decoration.mintDetails,
             ),
           ),
-        )
+        ),
+        Text(
+          "Select a collection",
+          style: decoration.collectionDropdownTitle
+        ),
+
+        //@TODO get COLLECTION names from backend VALUE CAN BE COLLLECTION OBJECT.
+        Container(
+          margin: const EdgeInsets.all(10.0),
+          width: MediaQuery.of(context).size.width * 3 / 4,
+
+          child: DropdownButtonFormField(
+            style: decoration.dropdownItemTextDecoration,
+            borderRadius: BorderRadius.circular(20),
+            dropdownColor: Colors.black,
+            icon: Icon(Icons.category_outlined,color: Colors.white,),
+            decoration: decoration.collectionContainer,
+            onChanged: (dynamic change){
+              print(change.toString());
+            },
+            items: [
+              DropdownMenuItem(
+                  value:1,
+                  child:
+              Text("hello world",style: decoration.dropdownItemTextDecoration,)
+              ),
+
+              DropdownMenuItem(
+                  value:2,
+                  child:
+                  Text("lo world",style: decoration.dropdownItemTextDecoration,)
+              ),
+
+
+
+            ],
+          ),
+        ),
       ],
     );
   }

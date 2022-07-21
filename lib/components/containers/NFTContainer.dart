@@ -52,7 +52,6 @@ class _NFTContainerState extends State<NFTContainer> {
 
     return GestureDetector(
       onTap: () {
-        //@todo route the user to nft Page. with the appropriate data.
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => NFTPage(NFTInfo: widget.nft))
@@ -69,7 +68,6 @@ class _NFTContainerState extends State<NFTContainer> {
 
               decoration: decoration.NFTimageContainerDecoration,
 
-              //@TODO get image from backend, if null show loading
                 child: ClipRRect(
                   borderRadius: const BorderRadius.vertical(top:Radius.circular(10)),
                   child: Image(
@@ -94,7 +92,6 @@ class _NFTContainerState extends State<NFTContainer> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      //@TODO get data from backend
                       Text(widget.nft.collectionName,
                       style: decoration.NFTcollectionDecoration,)
                     ],

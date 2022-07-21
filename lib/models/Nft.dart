@@ -73,18 +73,11 @@ class NFT {
     return false;
   }
 
-  Stream<List<TransactionHistory>> get transactionHistory async* {
-    List<TransactionHistory> transactionHistory = <TransactionHistory>[];
-    while (true) {
-      List JSONList = await getRequest("transactionHistory", pk);
-      List<TransactionHistory> newData = JSONList.map((item) => TransactionHistory.fromJson(item)).toList();
-      if (newData.length != transactionHistory.length ||
-          !newData.every((element) => transactionHistory.contains(element))) {
-        transactionHistory = newData;
-        yield transactionHistory;
-      }
-      await Future.delayed(const Duration(milliseconds: refreshRate));
-    }
+  Future<List<TransactionHistory>> get transactionHistory async {
+    List JSONList = await getRequest("transactionHistory", pk);
+    List<TransactionHistory> history = JSONList.map((item) => TransactionHistory.fromJson(item)).toList();
+    history.sort((e1, e2) => e1.date.compareTo(e2.date));
+    return history;
   }
 
 }
