@@ -1,13 +1,15 @@
+import 'package:collection/collection.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-
+import 'package:properly_made_nft_market/models/TransactionHistory.dart';
+import 'package:intl/intl.dart';
 var priceHistoryColor = Color(0x26FFFFFF);
 
 
 
 class TransactionHistoryChart extends StatefulWidget {
-  const TransactionHistoryChart({Key? key}) : super(key: key);
-
+  const TransactionHistoryChart({Key? key,required this.history}) : super(key: key);
+  final List<TransactionHistory> history;
   @override
   _TransactionHistoryChartState createState() => _TransactionHistoryChartState();
 }
@@ -38,7 +40,7 @@ class _TransactionHistoryChartState extends State<TransactionHistoryChart> {
             ),
             child: Padding(
               padding: const EdgeInsets.only(
-                  right: 18.0, left: 12.0, top: 24, bottom: 12),
+                  right: 18.0, left: 32.0, top: 50, bottom: 12),
               child: LineChart(
                 showAvg ? avgData() : mainData(),
               ),
@@ -51,7 +53,9 @@ class _TransactionHistoryChartState extends State<TransactionHistoryChart> {
               showAvg = !showAvg;
             });
           },
-          child: SizedBox(
+          child: Container(
+            padding: EdgeInsets.only(top:10,left: 10),
+
             width: 60,
             height: 34,
             child: Center(
@@ -105,19 +109,9 @@ class _TransactionHistoryChartState extends State<TransactionHistoryChart> {
       fontSize: 15,
     );
     String text;
-    switch (value.toInt()) {
-      case 1:
-        text = '10K';
-        break;
-      case 3:
-        text = '30k';
-        break;
-      case 5:
-        text = '50k';
-        break;
-      default:
-        return Container();
-    }
+
+    text = NumberFormat.compact().format(value.toInt());
+    print(text);
 
     return Text(text, style: style, textAlign: TextAlign.left);
   }
@@ -164,7 +158,7 @@ class _TransactionHistoryChartState extends State<TransactionHistoryChart> {
         leftTitles: AxisTitles(
           sideTitles: SideTitles(
             showTitles: true,
-            interval: 1,
+            interval: widget.history.reduce((a,b) => a.price > b.price ? a : b).price /3 ,
             getTitlesWidget: leftTitleWidgets,
             reservedSize: 42,
           ),
@@ -173,21 +167,9 @@ class _TransactionHistoryChartState extends State<TransactionHistoryChart> {
       borderData: FlBorderData(
           show: true,
           border: Border.all(color: const Color(0xff37434d), width: 1)),
-      minX: 0,
-      maxX: 11,
-      minY: 0,
-      maxY: 6,
       lineBarsData: [
         LineChartBarData(
-          spots: const [
-            FlSpot(0, 3),
-            FlSpot(2.6, 2),
-            FlSpot(4.9, 5),
-            FlSpot(6.8, 3.1),
-            FlSpot(8, 4),
-            FlSpot(9.5, 3),
-            FlSpot(11, 4),
-          ],
+          spots: widget.history.mapIndexed((index, item) => FlSpot(index.toDouble(), item.price.toDouble())).toList(),
           isCurved: true,
           gradient: LinearGradient(
             colors: gradientColors,

@@ -38,10 +38,10 @@ class _NFTPageState extends State<NFTPage> {
       appBar: AppBar(
         centerTitle: true,
         title: Text(widget.NFTInfo.name),
-        backgroundColor: Colors.transparent,
+        backgroundColor: decoration.appBarColor,
       ),
-        body: StreamBuilder<List<TransactionHistory>>(
-          stream: widget.NFTInfo.transactionHistory,
+        body: FutureBuilder<List<TransactionHistory>>(
+          future: widget.NFTInfo.transactionHistory,
           builder: (context, snapshot) {
             // list of transaction histories is visible here
             print(snapshot.data);
@@ -105,7 +105,7 @@ class _NFTPageState extends State<NFTPage> {
                               margin: EdgeInsets.symmetric(vertical: 20),
                             ),
                             //price history container.
-                            TransactionHistoryChart(),
+                            TransactionHistoryChart(history: snapshot.data ?? <TransactionHistory>[],),
                           ],
                         ),
                       ),

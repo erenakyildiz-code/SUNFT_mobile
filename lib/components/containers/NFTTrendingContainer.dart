@@ -1,20 +1,25 @@
 import 'package:flutter/material.dart';
 import "package:properly_made_nft_market/decoration/ContainerDecoration/NFTCollectionContainerDecoration.dart" as decoration;
-import 'package:properly_made_nft_market/models/NftCollection.dart';
-class NFTCollectionContainer extends StatefulWidget {
-  const NFTCollectionContainer({Key? key,required this.collection}) : super(key: key);
-  final NFTCollection collection;
-  const NFTCollectionContainer.parameterized(this.collection, Key? key): super(key: key);
+import 'package:properly_made_nft_market/models/Nft.dart';
+
+import '../../pages/NFTPage.dart';
+class NFTTrendingContainer extends StatefulWidget {
+  const NFTTrendingContainer({Key? key,required this.nft}) : super(key: key);
+  final NFT nft;
+  const NFTTrendingContainer.parameterized(this.nft, Key? key): super(key: key);
   @override
-  _NFTCollectionContainerState createState() => _NFTCollectionContainerState();
+  _NFTTrendingContainer createState() => _NFTTrendingContainer();
 }
 
-class _NFTCollectionContainerState extends State<NFTCollectionContainer> {
+class _NFTTrendingContainer extends State<NFTTrendingContainer> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: ()=>{
-      //@TODO route the user to collection page
+      Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => NFTPage(NFTInfo: widget.nft))
+      )
 
       },
       child: Container(
@@ -26,14 +31,16 @@ class _NFTCollectionContainerState extends State<NFTCollectionContainer> {
         height: MediaQuery
             .of(context)
             .size
-            .width * 1/3,
+            .width * 3/4,
         decoration: decoration.containerBoxDecoration,
         child: ClipRRect(
           borderRadius: BorderRadius.all(Radius.circular(10)),
-          child: FittedBox(
+        child: FittedBox(
             fit: BoxFit.cover,
+
             child: Image(
-              image: NetworkImage(widget.collection.collectionImage),
+
+              image: NetworkImage(widget.nft.dataLink),
             ),
           ),
         ),

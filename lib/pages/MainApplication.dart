@@ -49,6 +49,7 @@ class _MainPageState extends State<MainPage> with SingleTickerProviderStateMixin
               ),
               Positioned(
                   child: SingleChildScrollView(
+
                     physics: BouncingScrollPhysics(),
                     child: ((){
                       if(selectedIndex == 0)
