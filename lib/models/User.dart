@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:properly_made_nft_market/models/Nft.dart';
+import 'package:properly_made_nft_market/models/NftCollection.dart';
 import 'package:provider/provider.dart';
 import '../providers/UserProvider.dart';
 import '../variables.dart';
@@ -97,9 +98,12 @@ class User {
     if(liked){
       return (await deleteRequest("favorites", {...NFTInfo, "user": pk}));
     }
-
     return (await postRequest("favorites", {...NFTInfo, "user": pk}));
+  }
 
-
+  Future<List<NFTCollection>> get watchlistedCollections async {
+    List JSONList = await getRequest("watchLists", {"user": pk});
+    List<NFTCollection> watchListedCollections = JSONList.map((item) => NFTCollection.fromJson(item)).toList();
+    return watchListedCollections;
   }
 }
