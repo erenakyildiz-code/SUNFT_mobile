@@ -41,9 +41,11 @@ class _TransactionHistoryChartState extends State<TransactionHistoryChart> {
             child: Padding(
               padding: const EdgeInsets.only(
                   right: 18.0, left: 32.0, top: 50, bottom: 12),
-              child: LineChart(
-                showAvg ? avgData() : mainData(),
-              ),
+              child:
+
+              (widget.history.isNotEmpty) ? (LineChart(
+                showAvg ? avgData() : mainData())) : const SizedBox( width: 50,height: 50 ,child: Center(child: CircularProgressIndicator())),
+
             ),
           ),
         ),
