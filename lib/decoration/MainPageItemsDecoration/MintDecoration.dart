@@ -16,13 +16,16 @@ var mintDetails = GoogleFonts.roboto(
   color: titleColor,
 );
 
-var collectionContainer = InputDecoration(
+collectionContainer (hintText) => InputDecoration(
+  hintText: hintText,
+  hintStyle: dropdownItemTextDecoration,
   enabledBorder: OutlineInputBorder(
     borderRadius: BorderRadius.circular(20),
     borderSide: const BorderSide(
       width: 2,
       color: Colors.white,
     ),
+
 
   ),
   focusedBorder: OutlineInputBorder(
@@ -46,6 +49,26 @@ var dropdownItemTextDecoration = GoogleFonts.roboto(
 );
 
 var collectionDropdownTitle = GoogleFonts.roboto(
+  fontSize: 24,
+  fontWeight: FontWeight.w700,
+  color: dropdownItemTextColor,
+);
+
+var imagePickerDecoration = BoxDecoration(
+color: Colors.transparent,
+borderRadius: BorderRadius.all(Radius.circular(20)),
+border: Border.all(
+color: Colors.white,
+width: 2,
+)
+);
+var nothingSelectedDecoration = GoogleFonts.roboto(
+  fontSize: 24,
+  fontWeight: FontWeight.w700,
+  color: dropdownItemTextColor,
+);
+
+var mintButtonTextStyle =  GoogleFonts.roboto(
   fontSize: 24,
   fontWeight: FontWeight.w700,
   color: dropdownItemTextColor,
