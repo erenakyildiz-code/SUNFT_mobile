@@ -28,7 +28,7 @@ Future<List> getRequest(String path, Map<String, dynamic>?parameters) async {
     final response = await request.send();
     JSONList = json.decode(await response.stream.bytesToString());
   } catch(e) {
-    print("error:\n/$path\n${parameters.toString()}\n${e.toString()}");
+    print("error:\n$requestURL\n${parameters.toString()}\n${e.toString()}");
   }
   return JSONList;
 }
