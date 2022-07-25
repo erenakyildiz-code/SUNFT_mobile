@@ -1,4 +1,3 @@
-
 import 'package:properly_made_nft_market/backend/requests.dart';
 
 Future<DateTime?> getCurrentTime() async {
