@@ -29,7 +29,7 @@ class CategoryContainer extends StatelessWidget {
             fit: BoxFit.cover,
             child: Image(
 
-              image: NetworkImage(category.backgroundPicture),
+              image: NetworkImage(category.foregroundPicture),
             ),
           )
       ),

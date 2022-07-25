@@ -30,7 +30,7 @@ class User {
     return User(
         address: json['uAddress'],
         username: json['username'],
-        profilePicture: json['profilePicture'],
+        profilePicture: json['profilePicture'] ?? "https://ia801703.us.archive.org/6/items/twitter-default-pfp/e.png",
         email: json['email'],
         NFTLikes: json['NFTLikes'],
         collectionLikes: json["collectionLikes"]);

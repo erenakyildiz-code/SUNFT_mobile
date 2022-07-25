@@ -38,7 +38,7 @@ class NFT {
       name: json['name'],
       description: json['description'],
       metaDataType: json['metaDataType'],
-      dataLink: "$ImagePath${json['nftFile']}",
+      dataLink: json['nftFile'],
       collectionName: json['collectionName'],
       creator: json['creator'],
       owner: json['currentOwner'],

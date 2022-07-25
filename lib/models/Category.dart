@@ -23,8 +23,8 @@ class Category {
   factory Category.fromJson(Map<String, dynamic> json) {
     return Category(
         name : json['name'],
-        backgroundPicture : "$ImagePath${json['backgroundPicture']}",
-        foregroundPicture : "$ImagePath${json['foregroundPicture']}",
+        backgroundPicture : json['backgroundPicture'],
+        foregroundPicture : json['foregroundPicture'],
     );
 
   }
