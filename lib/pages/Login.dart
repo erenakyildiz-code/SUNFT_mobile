@@ -123,10 +123,10 @@ class Login extends StatelessWidget {
                             }
                           },
                           child: ClipRRect(
-                            borderRadius: BorderRadius.circular(15),
+                            borderRadius: BorderRadius.circular(50),
                             child: Container(
-                              width:  MediaQuery.of(context).size.width * 1/2 ,
-                              height: 50,
+                              width:  MediaQuery.of(context).size.width * 11/30 ,
+                              height: 56,
                               alignment: Alignment.bottomRight,
                               decoration: const BoxDecoration(
                                 gradient: LinearGradient(
@@ -156,7 +156,7 @@ class Login extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               const Text(
-                                "You can also,",
+                                "You can also ",
                                 style:  TextStyle(
                                     color: Colors.white,
                                     fontSize: 15
@@ -167,14 +167,14 @@ class Login extends StatelessWidget {
                                   Navigator.popAndPushNamed(context, "/Register"),
                                 },
                                 child:const Text(
-                                  "Sign Up ",
+                                  "sign up ",
                                   style:  TextStyle(
                                       color: Colors.pinkAccent,
                                       fontSize: 15
                                   ),
                                 ),
                               ),
-                              const Text("Or ",
+                              const Text("or ",
                                 style:TextStyle(
                                     color: Colors.white,
                                     fontSize: 15
@@ -185,7 +185,7 @@ class Login extends StatelessWidget {
                                   Navigator.popAndPushNamed(context, "/MainPage"),
                                 },
                                 child:const Text(
-                                  "Browse without signing in",
+                                  "browse without signing in",
                                   style:  TextStyle(
                                       color: Colors.pinkAccent,
                                       fontSize: 15

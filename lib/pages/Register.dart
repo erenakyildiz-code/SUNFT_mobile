@@ -118,10 +118,10 @@ class Register extends StatelessWidget {
                         },
                         child: ClipRRect(
 
-                          borderRadius: BorderRadius.circular(15),
+                          borderRadius: BorderRadius.circular(50),
                                 child: Container(
-                                  width:  MediaQuery.of(context).size.width * 1/2 ,
-                                  height: 50,
+                                  width:  MediaQuery.of(context).size.width * 11/30 ,
+                                  height: 56,
 
                                   alignment: Alignment.bottomRight,
                                   decoration: const BoxDecoration(
@@ -136,7 +136,7 @@ class Register extends StatelessWidget {
                                     ),
                                   ),
                                   child:const Center(
-                                    child:  Text(
+                                    child: Text(
                                       "Submit",
                                       style: decoration.registerSubmitButton,
                                     ),
@@ -152,7 +152,7 @@ class Register extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             const Text(
-                              "You can also,",
+                              "You can also ",
                               style:  TextStyle(
                                   color: Colors.white,
                                   fontSize: 15
@@ -163,14 +163,14 @@ class Register extends StatelessWidget {
                                 Navigator.popAndPushNamed(context, "/Login"),
                               },
                               child:const Text(
-                                "Sign in ",
+                                "sign in ",
                                 style:  TextStyle(
                                     color: Colors.pinkAccent,
                                     fontSize: 15
                                 ),
                               ),
                             ),
-                            const Text("Or ",
+                            const Text("or ",
                               style:TextStyle(
                                   color: Colors.white,
                                   fontSize: 15
@@ -182,7 +182,7 @@ class Register extends StatelessWidget {
                                 Navigator.popAndPushNamed(context, "/MainPage"),
                               },
                               child:const Text(
-                                "Browse without signing in",
+                                "browse without signing in",
                                 style:  TextStyle(
                                     color: Colors.pinkAccent,
                                     fontSize: 15

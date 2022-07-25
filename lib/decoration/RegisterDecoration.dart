@@ -39,7 +39,7 @@ final List<String> imageList = [
 //items
 const registerFormField = BoxDecoration(
   color: fieldColors,
-  borderRadius: BorderRadius.all(Radius.circular(20)),
+  borderRadius: BorderRadius.all(Radius.circular(6)),
 );
 var registerFormFieldButton = BoxDecoration(
   color: registerButtonColors,
@@ -48,6 +48,7 @@ var registerFormFieldButton = BoxDecoration(
 const registerSubmitButton = TextStyle(
   color: fieldColors,
   fontSize: 30,
+  fontWeight: FontWeight.w500,
 );
 var registerUsernameFieldInputDecoration = InputDecoration(
   hintText: "New Username",

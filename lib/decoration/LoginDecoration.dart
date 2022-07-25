@@ -41,8 +41,9 @@ var loginUsernameFieldInputDecoration = InputDecoration(
 );
 
 TextStyle loginSubmitButton = TextStyle(
-    color: fieldColors,
-    fontSize: 30,
+  color: fieldColors,
+  fontSize: 30,
+  fontWeight: FontWeight.w500,
 );
 
 
@@ -56,7 +57,7 @@ var loginPasswordFieldInputDecoration = InputDecoration(
 );
 var loginFormField = BoxDecoration(
   color: fieldColors,
-  borderRadius: const BorderRadius.all(Radius.circular(20)),
+  borderRadius: const BorderRadius.all(Radius.circular(6)),
 );
 var loginFormFieldButton = BoxDecoration(
   color: loginButtonColors,
