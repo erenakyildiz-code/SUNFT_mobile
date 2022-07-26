@@ -1,11 +1,6 @@
 import 'dart:async';
-
-import 'package:flutter/cupertino.dart';
 import 'package:properly_made_nft_market/models/Nft.dart';
 import 'package:properly_made_nft_market/models/NftCollection.dart';
-import 'package:provider/provider.dart';
-import '../providers/UserProvider.dart';
-import '../variables.dart';
 import '../backend/requests.dart';
 
 class User {
@@ -30,7 +25,7 @@ class User {
     return User(
         address: json['uAddress'],
         username: json['username'],
-        profilePicture: json['profilePicture'],
+        profilePicture: json['profilePicture'] ?? "https://ia801703.us.archive.org/6/items/twitter-default-pfp/e.png",
         email: json['email'],
         NFTLikes: json['NFTLikes'],
         collectionLikes: json["collectionLikes"]);
@@ -51,54 +46,30 @@ class User {
     return ownedNFTs;
   }
 
-  StreamController<List<NFT>> get ownedNFTsAsStreamController {
-    
-    late StreamController<List<NFT>> controller;
-    List<NFT> ownedNFTs = <NFT>[];
-    Timer? timer;
-
-    void getData(_) async {
-      List<NFT> newData = await this.ownedNFTs;
-      if (newData.length != ownedNFTs.length ||
-          !newData.every((element) => ownedNFTs.contains(element))) {
-            ownedNFTs = newData;
-            controller.add(ownedNFTs);
-      }
-    }
-
-    void startStream() {
-      timer = Timer.periodic(const Duration(milliseconds: refreshRate), getData);
-    }
-    
-    void resetStream() {
-      ownedNFTs = <NFT>[];
-      timer?.cancel();
-      timer = null;
-    }
-
-
-    controller = StreamController<List<NFT>>(
-        onListen: startStream,
-        onPause: resetStream,
-        onResume: startStream,
-        onCancel: resetStream);
-
-    return controller;
-  }
-
-
-
   Future<bool> userLikedNFT(Map<String, dynamic> NFTInfo) async {
     final List JSONList =
         await getRequest("favorites", {...NFTInfo, "user": pk});
     return JSONList.isNotEmpty;
   }
 
-  Future<bool> likeNFT(Map<String, dynamic> NFTInfo,bool liked,BuildContext context) async {
+  Future<bool> likeNFT(Map<String, dynamic> NFTInfo,bool liked) async {
     if(liked){
       return (await deleteRequest("favorites", {...NFTInfo, "user": pk}));
     }
     return (await postRequest("favorites", {...NFTInfo, "user": pk}));
+  }
+
+  Future<bool> userWatchListedCollection(String address) async {
+    final List JSONList =
+    await getRequest("watchLists", {"nftCollection": address, "user": pk});
+    return JSONList.isNotEmpty;
+  }
+
+  Future<bool> watchListCollection(String address, bool watchListed) async {
+    if(watchListed){
+      return (await deleteRequest("watchLists", {"nftCollection": address, "user": pk}));
+    }
+    return (await postRequest("watchLists", {"nftCollection": address, "user": pk}));
   }
 
   Future<List<NFTCollection>> get watchlistedCollections async {

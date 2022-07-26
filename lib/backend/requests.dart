@@ -28,7 +28,7 @@ Future<List> getRequest(String path, Map<String, dynamic>?parameters) async {
     final response = await request.send();
     JSONList = json.decode(await response.stream.bytesToString());
   } catch(e) {
-    print("error:\n/$path\n${parameters.toString()}\n${e.toString()}");
+    print("error:\n$requestURL\n${parameters.toString()}\n${e.toString()}");
   }
   return JSONList;
 }
@@ -56,7 +56,6 @@ Future<bool> deleteRequest(String path, Map<String, dynamic>?parameters) async {
   }
 
   requestURL = requestURL.substring(0, requestURL.length - 1);
-  print(requestURL);
   final request = http.Request("DELETE", Uri.parse(requestURL));
   request.headers.addAll(<String, String>{
     "Accept": "application/json",

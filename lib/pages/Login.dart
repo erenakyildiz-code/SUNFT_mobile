@@ -3,15 +3,10 @@
 // Needs 2 form fields, username and password.
 // User can also press Browse without logging in button to be able to browse everything without logging in.
 
-
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:properly_made_nft_market/Decoration/AnimatedGradient.dart';
 import "package:properly_made_nft_market/Decoration/LoginDecoration.dart" as decoration;
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:properly_made_nft_market/models/NftCollection.dart';
-import 'package:properly_made_nft_market/models/User.dart';
 import 'package:properly_made_nft_market/providers/UserProvider.dart';
 import 'package:provider/provider.dart';
 

@@ -1,4 +1,3 @@
-import '../variables.dart';
 import 'Nft.dart';
 import "../backend/requests.dart";
 
@@ -22,7 +21,7 @@ class NFTCollection {
     return NFTCollection(
       address: json["address"],
       name: json['name'],
-      collectionImage: "$ImagePath${json['collectionImage']}",
+      collectionImage: json['collectionImage'],
       description: json['description'],
       numLikes: json["numLikes"],
       owner: json["owner"],
