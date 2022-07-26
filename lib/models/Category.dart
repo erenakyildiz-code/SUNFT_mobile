@@ -1,5 +1,4 @@
 import '../backend/requests.dart';
-import '../variables.dart';
 import 'NftCollection.dart';
 
 class Category {
@@ -26,6 +25,14 @@ class Category {
         backgroundPicture : json['backgroundPicture'],
         foregroundPicture : json['foregroundPicture'],
     );
+  }
 
+  @override
+  bool operator == (Object rhs) {
+    if (rhs is Category) {
+      return (rhs.name == name && rhs.foregroundPicture == foregroundPicture
+      && rhs.backgroundPicture == backgroundPicture);
+    }
+    return false;
   }
 }

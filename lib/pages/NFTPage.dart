@@ -80,21 +80,14 @@ class _NFTPageState extends State<NFTPage> {
                           ],
                         ),
                       ),
-                            Padding(
-                              padding: const EdgeInsets.only(left:8.0,top:8.0),
-                              child: Row(
-                                children: [
-                                  Text(
-                                    "Address: ",
-                                    style: decoration.addressOfNftText,
-                                  ),
-                                  Text(
-                                    widget.NFTInfo.address,
-                                    style: decoration.addressOfNftText,
-                                  ),
-                                ],
-                              ),
-                            ),
+                        Padding(
+                          padding: const EdgeInsets.only(left:8.0,top:8.0),
+                          child: Text(
+                            "Address: ${widget.NFTInfo.address}",
+                            style: decoration.addressOfNftText,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
 
 
 

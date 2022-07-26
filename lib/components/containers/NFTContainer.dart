@@ -137,7 +137,7 @@ class _NFTContainerState extends State<NFTContainer> {
                                     userLikedNft = !userLikedNft!;
                                   });
 
-                                  await user!.likeNFT(widget.nft.pk,!userLikedNft!,context);
+                                  await user!.likeNFT(widget.nft.pk,!userLikedNft!);
                                   await context.read<UserProvider>().update();
                                 },
                                 child: Icon(

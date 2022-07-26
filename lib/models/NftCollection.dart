@@ -1,4 +1,3 @@
-import '../variables.dart';
 import 'Nft.dart';
 import "../backend/requests.dart";
 

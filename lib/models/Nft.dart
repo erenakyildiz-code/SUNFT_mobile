@@ -1,4 +1,3 @@
-import '../variables.dart';
 import "../backend/requests.dart";
 import 'TransactionHistory.dart';
 
