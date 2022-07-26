@@ -105,7 +105,96 @@ class _NFTPageState extends State<NFTPage> {
                               margin: EdgeInsets.symmetric(vertical: 20),
                             ),
                             //price history container.
-                            TransactionHistoryChart(history: snapshot.data ?? <TransactionHistory>[],),
+                            Container(
+                              width: MediaQuery.of(context).size.width,
+                              margin: EdgeInsets.only(left: 10,bottom: 20),
+                              child: Text(
+                                "Transaction History",
+                                textAlign: TextAlign.start,
+                                style: decoration.addressOfNftText,
+                              ),
+                            ),
+                            //LAGGY
+                            //TransactionHistoryChart(history: snapshot.data ?? <TransactionHistory>[],),
+                            //get owner data
+
+                            SizedBox(height: 10,),
+
+                              //@TODO backend data here.
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+
+                                children: [
+                                  Container(
+                                    width: MediaQuery.of(context).size.width ,
+                                    margin: EdgeInsets.symmetric(vertical: 10,horizontal: 10),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                                      color: decoration.listTileColor,
+                                    ),
+
+                                    child: ListTile(
+                                      title: Text(widget.NFTInfo.owner,style: decoration.listTileTitleStyle,),
+                                      subtitle: Text("h"),
+                                      leading: CircleAvatar(
+                                        backgroundColor: Colors.black,
+                                        backgroundImage: NetworkImage("https://www.ekdergi.com/wp-content/uploads/2017/09/default-avatar.jpg"),
+                                      ),
+                                      trailing: Text("Owner"),
+
+
+
+                            ),
+                                  ),
+                                  Container(
+                                    margin: EdgeInsets.symmetric(vertical: 10,horizontal: 10),
+                                    width: MediaQuery.of(context).size.width ,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                                      color: decoration.listTileColor,
+                                    ),
+                                    child: ListTile(
+                                      title: Text(widget.NFTInfo.owner,style: decoration.listTileTitleStyle,),
+                                      subtitle: Text("h"),
+                                      leading: CircleAvatar(
+                                        backgroundColor: Colors.black,
+                                        backgroundImage: NetworkImage("https://www.ekdergi.com/wp-content/uploads/2017/09/default-avatar.jpg"),
+                                      ),
+                                      trailing: Text("Creator"),
+
+
+
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            //Buy / bid Button
+                            if(widget.NFTInfo.marketStatus == 0)...[
+                              Container(
+                                width: MediaQuery.of(context).size.width,
+                                margin: EdgeInsets.all(10),
+                                decoration: decoration.nftMarketStatusBox,
+                                child: Text("Buy this NFT for"),
+                              ),
+                            ]
+                            else if(widget.NFTInfo.marketStatus == 1)...[
+                              Container(
+                                width: MediaQuery.of(context).size.width,
+                                decoration: decoration.nftMarketStatusBox,
+                                margin: EdgeInsets.all(10),
+                                child: Text("Bid on this NFT"),
+                              ),
+                            ]
+                            else if(widget.NFTInfo.marketStatus == 2)...[
+                                Container(
+                                  width: MediaQuery.of(context).size.width,
+                                  decoration: decoration.nftMarketStatusBox,
+                                  margin: EdgeInsets.all(10),
+                                  child: Text("This NFT is currently not on market"),
+                                ),
+                              ]
+
+
                           ],
                         ),
                       ),

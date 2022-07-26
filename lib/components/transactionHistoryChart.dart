@@ -81,27 +81,10 @@ class _TransactionHistoryChartState extends State<TransactionHistoryChart> {
       fontWeight: FontWeight.bold,
       fontSize: 16,
     );
-    Widget text;
-    switch (value.toInt()) {
-      case 2:
-        text = const Text('MAR', style: style);
-        break;
-      case 5:
-        text = const Text('JUN', style: style);
-        break;
-      case 8:
-        text = const Text('SEP', style: style);
-        break;
-      default:
-        text = const Text('', style: style);
-        break;
-    }
+    String text;
+    text = widget.history[value.toInt()].date.day.toString() +"/"+ widget.history[value.toInt()].date.month.toString();
 
-    return SideTitleWidget(
-      axisSide: meta.axisSide,
-      space: 8.0,
-      child: text,
-    );
+    return Padding(padding: EdgeInsets.only(top: 10),child: Text(text, style: style, textAlign: TextAlign.left));
   }
 
   Widget leftTitleWidgets(double value, TitleMeta meta) {
@@ -113,7 +96,6 @@ class _TransactionHistoryChartState extends State<TransactionHistoryChart> {
     String text;
 
     text = NumberFormat.compact().format(value.toInt());
-    print(text);
 
     return Text(text, style: style, textAlign: TextAlign.left);
   }
@@ -153,7 +135,7 @@ class _TransactionHistoryChartState extends State<TransactionHistoryChart> {
           sideTitles: SideTitles(
             showTitles: true,
             reservedSize: 30,
-            interval: 1,
+            interval:1,
             getTitlesWidget: bottomTitleWidgets,
           ),
         ),

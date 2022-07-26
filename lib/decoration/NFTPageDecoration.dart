@@ -23,6 +23,20 @@ var priceHistoryTextStyle = GoogleFonts.roboto(
     fontWeight: FontWeight.w400
 );
 var appBarColor = HexColor.fromHex("#01236a");
+var listTileColor = Color(0x2CFFFFFF);
+
+var listTileTitleStyle =  GoogleFonts.roboto(
+    color: Colors.white,
+    fontSize: 15,
+    fontWeight: FontWeight.w400
+);
+var nftMarketStatusBox = BoxDecoration(
+  color: Color(0x2CFFFFFF),
+  borderRadius: BorderRadius.all(Radius.circular(20)),
+
+
+);
+
 
 extension HexColor on Color {
   /// String is in the format "aabbcc" or "ffaabbcc" with an optional leading "#".
