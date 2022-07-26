@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import "package:properly_made_nft_market/decoration/ContainerDecoration/NFTCollectionContainerDecoration.dart" as decoration;
 import 'package:properly_made_nft_market/models/NftCollection.dart';
+import 'package:properly_made_nft_market/pages/CollectionPage.dart';
 class NFTCollectionContainer extends StatefulWidget {
   const NFTCollectionContainer({Key? key,required this.collection}) : super(key: key);
   final NFTCollection collection;
@@ -16,6 +17,10 @@ class _NFTCollectionContainerState extends State<NFTCollectionContainer> {
       onTap: ()=>{
       //@TODO route the user to collection page
 
+      Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => CollectionPage(collectionInfo: widget.collection))
+      )
       },
       child: Container(
         margin: EdgeInsets.symmetric(horizontal: 10),

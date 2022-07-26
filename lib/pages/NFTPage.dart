@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:properly_made_nft_market/Decoration/AnimatedGradient.dart';
+import 'package:properly_made_nft_market/decoration/NFTPageDecoration.dart';
 import 'package:properly_made_nft_market/models/Nft.dart';
 import 'package:properly_made_nft_market/Decoration/NFTPageDecoration.dart' as decoration;
 import "package:properly_made_nft_market/components/transactionHistoryChart.dart";
+import 'package:properly_made_nft_market/services/AuthService.dart';
+import 'package:provider/provider.dart';
 
+import '../helpers/UserHelper.dart';
 import '../models/TransactionHistory.dart';
+import '../models/User.dart';
+import '../providers/UserProvider.dart';
 /*
 CONDITIONS:
   1- ON SALE (means item is on market also),
@@ -32,8 +38,72 @@ class NFTPage extends StatefulWidget {
 }
 
 class _NFTPageState extends State<NFTPage> {
+  GestureDetector paymentContainer(int marketStatus, bool isOwner){
+    String textOfBox = "";
+    bool isActive = true;
+    if(marketStatus == 0){
+      textOfBox = "This item is not on market";
+      isActive = false;
+    }
+    else if (marketStatus == 1){
+      if(isOwner){
+        textOfBox = "Sell/Auction off this NFT";
+      }
+      else{
+        textOfBox = "This item is not for sale";
+        isActive = false;
+
+      }
+    }
+    else if (marketStatus == 2){
+      if(isOwner){
+        textOfBox = "NFT is currently on sale";
+        isActive = false;
+
+      }
+      else{
+        textOfBox = "Buy this NFT";
+      }
+    }
+    else if (marketStatus == 3){
+      if(isOwner){
+        textOfBox = "NFT is currently on sale";
+        isActive = false;
+
+      }
+      else{
+        textOfBox = "Bid on this NFT";
+      }
+    }
+
+
+    return GestureDetector(
+      child: Container(
+        width: MediaQuery.of(context).size.width * 3/4,
+        height: 36,
+        margin: EdgeInsets.all(10),
+        decoration: nftMarketStatusBox,
+        child: Stack(
+          children: [
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                child: Icon(Icons.paid_outlined,color: (isActive ? Colors.white : Colors.grey),),
+              ),
+            ),
+            Center(child: Text(textOfBox, style: decoration.marketStatusTextStyle(isActive),)),
+          ],
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    final User? user = Provider
+        .of<UserProvider>(context)
+        .user;
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -97,6 +167,8 @@ class _NFTPageState extends State<NFTPage> {
                               height: 3,
                               margin: EdgeInsets.symmetric(vertical: 20),
                             ),
+                            paymentContainer(widget.NFTInfo.marketStatus,widget.NFTInfo.owner == user?.address),
+
                             //price history container.
                             Container(
                               width: MediaQuery.of(context).size.width,
@@ -108,7 +180,7 @@ class _NFTPageState extends State<NFTPage> {
                               ),
                             ),
                             //LAGGY
-                            //TransactionHistoryChart(history: snapshot.data ?? <TransactionHistory>[],),
+                            TransactionHistoryChart(history: snapshot.data ?? <TransactionHistory>[],),
                             //get owner data
 
                             SizedBox(height: 10,),
@@ -126,18 +198,29 @@ class _NFTPageState extends State<NFTPage> {
                                       color: decoration.listTileColor,
                                     ),
 
-                                    child: ListTile(
-                                      title: Text(widget.NFTInfo.owner,style: decoration.listTileTitleStyle,),
-                                      subtitle: Text("h"),
-                                      leading: CircleAvatar(
-                                        backgroundColor: Colors.black,
-                                        backgroundImage: NetworkImage("https://www.ekdergi.com/wp-content/uploads/2017/09/default-avatar.jpg"),
-                                      ),
-                                      trailing: Text("Owner"),
+                                    child: FutureBuilder<User?>(
+                                      future: getUser(address: widget.NFTInfo.owner),
+                                      builder: (context, snapshot) {
+                                        if(snapshot.hasData){
+                                          return ListTile(
+                                            title: Text(snapshot.data!.username,style: decoration.listTileTitleStyle,),
+                                            subtitle: Text( widget.NFTInfo.owner),
+                                            leading: CircleAvatar(
+                                              backgroundColor: Colors.black,
+                                              backgroundImage: NetworkImage(snapshot.data!.profilePicture),
+                                            ),
+                                            trailing: Text("Owner"),
 
 
 
-                            ),
+                                          );
+                                        }
+                                        else{
+                                          return const SizedBox( width:50, height: 50,child: Center(child:CircularProgressIndicator()));
+                                        }
+
+                                      }
+                                    ),
                                   ),
                                   Container(
                                     margin: EdgeInsets.symmetric(vertical: 10,horizontal: 10),
@@ -146,46 +229,34 @@ class _NFTPageState extends State<NFTPage> {
                                       borderRadius: BorderRadius.all(Radius.circular(10)),
                                       color: decoration.listTileColor,
                                     ),
-                                    child: ListTile(
-                                      title: Text(widget.NFTInfo.owner,style: decoration.listTileTitleStyle,),
-                                      subtitle: Text("h"),
-                                      leading: CircleAvatar(
-                                        backgroundColor: Colors.black,
-                                        backgroundImage: NetworkImage("https://www.ekdergi.com/wp-content/uploads/2017/09/default-avatar.jpg"),
-                                      ),
-                                      trailing: Text("Creator"),
+                                    child: FutureBuilder<User?>(
+                                        future: getUser(address: widget.NFTInfo.creator),
+                                        builder: (context, snapshot) {
+                                          if(snapshot.hasData){
+                                            return ListTile(
+                                              title: Text(snapshot.data!.username,style: decoration.listTileTitleStyle,),
+                                              subtitle: Text(widget.NFTInfo.creator),
+                                              leading: CircleAvatar(
+                                                backgroundColor: Colors.black,
+                                                backgroundImage: NetworkImage(snapshot.data!.profilePicture),
+                                              ),
+                                              trailing: Text("Creator"),
 
 
 
+                                            );
+                                          }
+                                          else{
+                                            return const SizedBox( width:50, height: 50,child: Center(child:CircularProgressIndicator()));
+                                          }
+
+                                        }
                                     ),
                                   ),
                                 ],
                               ),
                             //Buy / bid Button
-                            if(widget.NFTInfo.marketStatus == 0)...[
-                              Container(
-                                width: MediaQuery.of(context).size.width,
-                                margin: EdgeInsets.all(10),
-                                decoration: decoration.nftMarketStatusBox,
-                                child: Text("Buy this NFT for"),
-                              ),
-                            ]
-                            else if(widget.NFTInfo.marketStatus == 1)...[
-                              Container(
-                                width: MediaQuery.of(context).size.width,
-                                decoration: decoration.nftMarketStatusBox,
-                                margin: EdgeInsets.all(10),
-                                child: Text("Bid on this NFT"),
-                              ),
-                            ]
-                            else if(widget.NFTInfo.marketStatus == 2)...[
-                                Container(
-                                  width: MediaQuery.of(context).size.width,
-                                  decoration: decoration.nftMarketStatusBox,
-                                  margin: EdgeInsets.all(10),
-                                  child: Text("This NFT is currently not on market"),
-                                ),
-                              ]
+
 
 
                           ],

@@ -36,7 +36,11 @@ var nftMarketStatusBox = BoxDecoration(
 
 
 );
-
+marketStatusTextStyle(bool isActive) => GoogleFonts.roboto(
+color: isActive ?Colors.white: Colors.grey,
+fontSize: 16,
+fontWeight: FontWeight.w400
+);
 
 extension HexColor on Color {
   /// String is in the format "aabbcc" or "ffaabbcc" with an optional leading "#".
