@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:properly_made_nft_market/components/Containers/NFTContainer.dart';
+import 'package:properly_made_nft_market/helpers/NFTHelper.dart';
 import 'package:properly_made_nft_market/helpers/UserHelper.dart';
 import 'package:properly_made_nft_market/models/NftCollection.dart';
 import 'package:properly_made_nft_market/decoration/AnimatedGradient.dart';
 import 'package:properly_made_nft_market/decoration/CollectionPageDecoration.dart' as decoration;
 
+import '../components/ListViewContainer.dart';
+import '../models/Nft.dart';
 import '../models/User.dart';
 class CollectionPage extends StatefulWidget {
   const CollectionPage({Key? key, required this.collectionInfo}) : super(key: key);
@@ -14,6 +18,7 @@ class CollectionPage extends StatefulWidget {
 
 class _CollectionPageState extends State<CollectionPage> {
   bool expandPressed = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -137,6 +142,14 @@ class _CollectionPageState extends State<CollectionPage> {
                           ],
                         ),
                       ),
+                      Container(
+                          padding: EdgeInsets.only(left:20),
+                        width:  MediaQuery.of(context).size.width,
+                          child: Text("Items in this collection:" , style: decoration.collectionItemsTextStyle, )),
+                      ListViewContainer<NFT,NFTContainer>(
+                        parameterizedContainerConstructor: NFTContainer.parameterized,
+                        future: getNFTsByCollection({"collection":widget.collectionInfo.address}),
+                  ),
 
 
 
