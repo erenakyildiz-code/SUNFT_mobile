@@ -152,14 +152,6 @@ class _CollectionPageState extends State<CollectionPage> {
                   ),
 
 
-
-
-
-
-
-
-
-
                     ],
                   ),
                 ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import "package:properly_made_nft_market/decoration/MainPageItemsDecoration/ShowcaseDecoration.dart" as decoration;
 import 'package:properly_made_nft_market/models/Category.dart';
+import 'package:properly_made_nft_market/pages/CategoryPage.dart';
 
 
 class CategoryContainer extends StatelessWidget {
@@ -10,27 +11,35 @@ class CategoryContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 10),
-      width: MediaQuery
-          .of(context)
-          .size
-          .width * 1/3,
-      height: MediaQuery
-          .of(context)
-          .size
-          .width * 1/3,
-      decoration: decoration.categoryDecoration,
-      child: ClipRRect(
-            borderRadius: const BorderRadius.all(
-                Radius.circular(20)
-            ),
-          child: FittedBox(
-            fit: BoxFit.cover,
-            child: Image(
-              image: NetworkImage(category.foregroundPicture),
-            ),
-          )
+    return GestureDetector(
+      onTap: ()=>{
+        Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => CategoryPage(category: category))
+        )
+      },
+      child: Container(
+        margin: const EdgeInsets.symmetric(horizontal: 10),
+        width: MediaQuery
+            .of(context)
+            .size
+            .width * 1/3,
+        height: MediaQuery
+            .of(context)
+            .size
+            .width * 1/3,
+        decoration: decoration.categoryDecoration,
+        child: ClipRRect(
+              borderRadius: const BorderRadius.all(
+                  Radius.circular(20)
+              ),
+            child: FittedBox(
+              fit: BoxFit.cover,
+              child: Image(
+                image: NetworkImage(category.foregroundPicture),
+              ),
+            )
+        ),
       ),
     );
   }

@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import "package:properly_made_nft_market/decoration/MainPageItemsDecoration/MintDecoration.dart" as decoration;
 import 'package:image_picker/image_picker.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 import '../CreateCollection.dart';
 
@@ -200,32 +202,42 @@ class _MintState extends State<Mint> {
 
             ClipRRect(
 
-    child: Container(
+    child: GestureDetector(
+      onTap: ()=> launch("https://metamask.app.link/dapp/10.0.2.2:3000/Mobile/Mint_NFT_existing_collection?"),
+      child: Container(
 
-      margin: EdgeInsets.all(10),
-    width:  MediaQuery.of(context).size.width * 1/2 ,
-    height: 50,
-    alignment: Alignment.bottomRight,
-    decoration: const BoxDecoration(
-      borderRadius: BorderRadius.all(Radius.circular(15)),
-    gradient: LinearGradient(
-    colors: <Color>[
-    Color(0xFF596EED),
-    Color(0xFFED5CAB),
-    //Color(0xFF42A5F5),
-    ],
-    begin: Alignment.centerLeft,
-    end: Alignment.centerRight
+        margin: EdgeInsets.all(10),
+      width:  MediaQuery.of(context).size.width * 1/2 ,
+      height: 50,
+      alignment: Alignment.bottomRight,
+      decoration: const BoxDecoration(
+        borderRadius: BorderRadius.all(Radius.circular(15)),
+      gradient: LinearGradient(
+      colors: <Color>[
+      Color(0xFF596EED),
+      Color(0xFFED5CAB),
+      //Color(0xFF42A5F5),
+      ],
+      begin: Alignment.centerLeft,
+      end: Alignment.centerRight
+      ),
+      ),
+      child: Center(
+      child:  Text(
+      "Mint this NFT",
+      style: decoration.mintButtonTextStyle,
+      )
+      ),
+      ),
     ),
     ),
-    child: Center(
-    child:  Text(
-    "Mint this NFT",
-    style: decoration.mintButtonTextStyle,
-    )
-    ),
-    ),
-    ),
+        Center(
+          child: Text(
+            "You must choose the option to launch this url on Metamask Browser",
+            style: decoration.dropdownItemTextDecoration,
+            textAlign: TextAlign.center,
+          ),
+        )
 
       ],
     );

@@ -6,3 +6,9 @@ Future<List<NFTCollection>> getTrendingCollections(Map<String,dynamic>? query)as
   List<NFTCollection> collections = JsonList.map((item) => NFTCollection.fromJson(item)).toList();
   return collections;
 }
+Future<List<NFTCollection>> getNFTsByCategory(Map<String,dynamic>? query) async {
+  List JsonList = await getRequest("nftcollections",query);
+  List<NFTCollection> nfts = JsonList.map((item) => NFTCollection.fromJson(item)).toList();
+  return nfts;
+
+}
