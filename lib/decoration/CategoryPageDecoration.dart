@@ -9,8 +9,8 @@ var categoryImageDecoration = BoxDecoration(
 );
 
 var categoryImageTextStyle = GoogleFonts.roboto(
-    color: Colors.white,
-    fontSize: 32,
+    color: Colors.black,
+    fontSize: 24,
     fontWeight: FontWeight.w700
 );
 

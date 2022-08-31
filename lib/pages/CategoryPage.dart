@@ -37,28 +37,32 @@ class _CategoryPageState extends State<CategoryPage> {
                         borderRadius: BorderRadius.circular(20),
                         child: Stack(
                           children: [
-                            Positioned(child: Image(image: NetworkImage(widget.category.backgroundPicture),height: 200,fit: BoxFit.fill,)),
-                            Positioned(child: Center(child: CircleAvatar(backgroundImage: NetworkImage(widget.category.foregroundPicture),radius: 50,))),
+                            Positioned(child: Container(
+                                child: Image(image: NetworkImage(widget.category.backgroundPicture),height: 200,fit: BoxFit.cover,),
+                              width: double.infinity,
+                            )),
+                            Container(height:200,width: MediaQuery.of(context).size.width,child: Align(alignment: Alignment.bottomCenter,child: CircleAvatar(backgroundImage: NetworkImage(widget.category.foregroundPicture),radius: 50,))),
 
+                            Container(
+
+                              height: 50,
+                              width: MediaQuery.of(context).size.width,
+                              margin: EdgeInsets.all(20),
+                              decoration: decoration.categoryNameBoxDecoration,
+                              child: Center(
+                                child: Text(
+                                  widget.category.name + " Collections",
+                                  style: decoration.categoryImageTextStyle,
+                                ),
+                              ),
+
+                            ),
                           ],
                         ),
                       ),
                     ),
                   ),
-                  Container(
 
-                    height: 50,
-                    width: MediaQuery.of(context).size.width,
-                    margin: EdgeInsets.all(20),
-                    decoration: decoration.categoryNameBoxDecoration,
-                    child: Center(
-                      child: Text(
-                        widget.category.name + " Collections",
-                        style: decoration.categoryImageTextStyle,
-                      ),
-                    ),
-
-                  ),
                   ListViewContainer<NFTCollection, NFTCollectionContainer>(parameterizedContainerConstructor: NFTCollectionContainer.parameterized, future: getNFTsByCategory({"category":widget.category.name})),
 
 

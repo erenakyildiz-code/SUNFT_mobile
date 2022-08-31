@@ -1,5 +1,7 @@
 import '../backend/requests.dart';
 import '../models/User.dart';
+import "package:properly_made_nft_market/providers/ethereumProvider.dart" as ethereumProvider;
+
 
 Future<User?> getUser({String? username, String? address}) async {
   List response = [];

@@ -2,13 +2,16 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:properly_made_nft_market/components/Containers/NFTCollectionContainer.dart';
 import 'package:properly_made_nft_market/components/ListViewContainer.dart';
 import "package:properly_made_nft_market/decoration/MainPageItemsDecoration/ProfileDecoration.dart" as decoration;
 import 'package:properly_made_nft_market/models/Nft.dart';
 import 'package:properly_made_nft_market/components/containers/NFTContainer.dart';
+import 'package:properly_made_nft_market/models/NftCollection.dart';
 import 'package:provider/provider.dart';
 import '../../models/User.dart';
 import '../../providers/UserProvider.dart';
+import '../DepositWithdraw.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -25,6 +28,9 @@ class _ProfilePageState extends State<ProfilePage> with SingleTickerProviderStat
      Tab(
        icon: Icon(CupertinoIcons.heart_fill),
      ),
+     Tab(
+       icon: Icon(Icons.collections)
+     )
 // Tab(icon: Icon(Icons.bookmark))
    ];
 
@@ -117,19 +123,28 @@ class _ProfilePageState extends State<ProfilePage> with SingleTickerProviderStat
                       Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          Padding(
-                            padding: const EdgeInsets.only(left: 20.0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "User Balance",
-                                  style: decoration.balanceSheetText,
-                                  textAlign: TextAlign.start,
-                                ),
-                                const Icon(CupertinoIcons.bitcoin,
-                                  color: Colors.white,)
-                              ],
+                          GestureDetector(
+                            onTap: ()=>{
+                            Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => DepositWithdraw()
+                            )
+                            )
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 20.0),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "User Balance",
+                                    style: decoration.balanceSheetText,
+                                    textAlign: TextAlign.start,
+                                  ),
+                                  const Icon(CupertinoIcons.bitcoin,
+                                    color: Colors.white,)
+                                ],
+                              ),
                             ),
                           ),
                           Padding(
@@ -191,6 +206,8 @@ class _ProfilePageState extends State<ProfilePage> with SingleTickerProviderStat
               ListViewContainer<NFT, NFTContainer>(parameterizedContainerConstructor: NFTContainer.parameterized, future: user.ownedNFTs),
             if (_index == 1)
               ListViewContainer<NFT, NFTContainer>(parameterizedContainerConstructor: NFTContainer.parameterized, future: user.likedNFTs),
+            if(_index == 2)
+              ListViewContainer<NFTCollection, NFTCollectionContainer> (parameterizedContainerConstructor:  NFTCollectionContainer.parameterized, future: user.watchlistedCollections)
     ]
         ));
           }
