@@ -23,7 +23,7 @@ class _NFTCollectionContainerState extends State<NFTCollectionContainer> {
       )
       },
       child: Container(
-        margin: EdgeInsets.symmetric(horizontal: 10),
+        margin: EdgeInsets.symmetric(horizontal: 10,vertical: 10),
         width: MediaQuery
             .of(context)
             .size

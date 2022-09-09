@@ -85,4 +85,9 @@ class User {
     JSONList.map((item) => NFTCollection.fromJson(item)).toList();
     return ownedCollections;
   }
+  Future<bool> watchLists(String address) async {
+    List isCollectionFollowed = await getRequest("watchLists", {"user": pk,"nftCollection": address});
+    print(isCollectionFollowed);
+    return (isCollectionFollowed.isNotEmpty);
+  }
 }

@@ -20,12 +20,35 @@ class CollectionPage extends StatefulWidget {
 
 class _CollectionPageState extends State<CollectionPage> {
   bool expandPressed = false;
+  bool? userFollowsThis;
+  void _getUserFollowedCollection(user) async {
+    var userLike = await user?.watchLists(widget.collectionInfo.address!);
+    setState(() {
+      userFollowsThis = userLike;
+    });
+  }
+  @override
+  void initState() {
+    Future.delayed(Duration.zero,() {
+      final User? user = Provider
+          .of<UserProvider>(context,listen: false)
+          .user;
+      if(user != null){
+        _getUserFollowedCollection(user);
+      }
+    });
 
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     final User? user = Provider
         .of<UserProvider>(context)
         .user;
+
+
+
+
     return Scaffold(
       body:
         Container(
@@ -92,12 +115,19 @@ class _CollectionPageState extends State<CollectionPage> {
                       ),
                       GestureDetector(
 
+                        onTap: ()=>{
+                          if (userFollowsThis != null){
+
+                            user!.watchListCollection(widget.collectionInfo.address!, userFollowsThis!)
+
+                          }
+                        },
                         child: Container(
                           width: MediaQuery.of(context).size.width * 3 /4 ,
                           height: 30,
                           alignment: Alignment.center,
                           margin: EdgeInsets.only(bottom: 10),
-                          child: Text("Watchlist this collection", style: decoration.collectionDescriptionTextStyle,),
+                          child: Text((userFollowsThis != null) ? ((userFollowsThis!) ?  "Remove this collection from watchlist" :"watchlist this collection" ) : "Loading", style: decoration.collectionDescriptionTextStyle,),
                           decoration: decoration.collectionNameBoxDecoration,
                         ),
                       ),
