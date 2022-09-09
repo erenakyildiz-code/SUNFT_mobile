@@ -185,7 +185,6 @@ class _NFTPageState extends State<NFTPage> {
 
                             SizedBox(height: 10,),
 
-                              //@TODO backend data here.
                               Column(
                                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
 

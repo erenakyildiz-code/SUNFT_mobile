@@ -5,10 +5,12 @@ import 'package:properly_made_nft_market/helpers/UserHelper.dart';
 import 'package:properly_made_nft_market/models/NftCollection.dart';
 import 'package:properly_made_nft_market/decoration/AnimatedGradient.dart';
 import 'package:properly_made_nft_market/decoration/CollectionPageDecoration.dart' as decoration;
+import 'package:provider/provider.dart';
 
 import '../components/ListViewContainer.dart';
 import '../models/Nft.dart';
 import '../models/User.dart';
+import '../providers/UserProvider.dart';
 class CollectionPage extends StatefulWidget {
   const CollectionPage({Key? key, required this.collectionInfo}) : super(key: key);
   final NFTCollection collectionInfo;
@@ -21,6 +23,9 @@ class _CollectionPageState extends State<CollectionPage> {
 
   @override
   Widget build(BuildContext context) {
+    final User? user = Provider
+        .of<UserProvider>(context)
+        .user;
     return Scaffold(
       body:
         Container(
@@ -83,6 +88,17 @@ class _CollectionPageState extends State<CollectionPage> {
                               ],
                             ),
                           ],
+                        ),
+                      ),
+                      GestureDetector(
+
+                        child: Container(
+                          width: MediaQuery.of(context).size.width * 3 /4 ,
+                          height: 30,
+                          alignment: Alignment.center,
+                          margin: EdgeInsets.only(bottom: 10),
+                          child: Text("Watchlist this collection", style: decoration.collectionDescriptionTextStyle,),
+                          decoration: decoration.collectionNameBoxDecoration,
                         ),
                       ),
                       Container(

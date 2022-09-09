@@ -3,9 +3,13 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import "package:properly_made_nft_market/decoration/MainPageItemsDecoration/MintDecoration.dart" as decoration;
 import 'package:image_picker/image_picker.dart';
+import 'package:properly_made_nft_market/models/NftCollection.dart';
+import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
+import '../../models/User.dart';
+import '../../providers/UserProvider.dart';
 import '../CreateCollection.dart';
 
 class Mint extends StatefulWidget {
@@ -32,6 +36,9 @@ class _MintState extends State<Mint> {
 
   @override
   Widget build(BuildContext context) {
+    final User? user = Provider
+        .of<UserProvider>(context)
+        .user;
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -65,65 +72,74 @@ class _MintState extends State<Mint> {
 
 
           child: Center(
-            child: DropdownButtonFormField(
+            child: FutureBuilder<List<NFTCollection>>(
+              future: user?.ownedCollections,
+              builder: (context, snapshot) {
+                return DropdownButtonFormField(
 
-              isDense: true,
-              elevation: 0,
-              style: decoration.dropdownItemTextDecoration,
-              borderRadius: BorderRadius.circular(20),
-              dropdownColor: Colors.black,
-              decoration: decoration.collectionContainer("Collection"),
-              onChanged: (dynamic change){
-
-
-                if(change == "NEW"){
-                  Navigator.pop(context);
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => CreateCollectionPage()
-                      )
-                  );
+                  isDense: true,
+                  elevation: 0,
+                  style: decoration.dropdownItemTextDecoration,
+                  borderRadius: BorderRadius.circular(20),
+                  dropdownColor: Colors.black,
+                  decoration: decoration.collectionContainer("Collection"),
+                  onChanged: (dynamic change){
 
 
-                }
-                else {
-                  print(change.toString());
-
-                }
-
-
-
-              },
-              items: [
-                DropdownMenuItem(
+                    if(change == "NEW"){
+                      Navigator.pop(context);
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => CreateCollectionPage()
+                          )
+                      );
 
 
-                    value:1,
-                    child:
-                Text("hello world",style: decoration.dropdownItemTextDecoration,)
-                ),
+                    }
+                    else {
+                      print(change.toString());
 
-                DropdownMenuItem(
-                    value:2,
-                    child:
-                    Text("lo world",style: decoration.dropdownItemTextDecoration,)
-                ),
-                DropdownMenuItem(
-                    value:"NEW",
-
-                    child:
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        const Center(child: Icon(Icons.add,color: Colors.white,size: 24,)),
-                      ],
-                    )
-                ),
+                    }
 
 
 
-              ],
+                  },
+                  items: [
+                    if(snapshot.data != null)
+                    for(int i = 0; i < snapshot.data!.length; i++)...[
+                      DropdownMenuItem(
+                          value:snapshot.data![i].name,
+
+                          child:
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Center(child: Text(snapshot.data![i].name)),
+                            ],
+                          )
+                      ),
+                    ],
+
+
+                    DropdownMenuItem(
+                        value:"NEW",
+
+                        child:
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            const Center(child: Icon(Icons.add,color: Colors.white,size: 24,)),
+                          ],
+                        )
+                    ),
+
+
+
+                  ],
+                );
+              }
             ),
           ),
         ),

@@ -74,7 +74,15 @@ class User {
 
   Future<List<NFTCollection>> get watchlistedCollections async {
     List JSONList = await getRequest("watchLists", {"user": pk});
+    print(JSONList);
     List<NFTCollection> watchListedCollections = JSONList.map((item) => NFTCollection.fromJson(item)).toList();
+
     return watchListedCollections;
+  }
+  Future<List<NFTCollection>> get ownedCollections async {
+    List JSONList = await getRequest("nftcollections", {"owner": pk});
+    List<NFTCollection> ownedCollections =
+    JSONList.map((item) => NFTCollection.fromJson(item)).toList();
+    return ownedCollections;
   }
 }
