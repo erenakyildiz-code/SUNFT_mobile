@@ -67,3 +67,13 @@ var balanceSheetText = GoogleFonts.roboto(
   fontWeight: FontWeight.w400,
 
 );
+
+var depositPageRouterStyle = BoxDecoration(
+  color: balanceSheetColor,
+  borderRadius: const BorderRadius.all(Radius.circular(30)),
+);
+var depositWithdrawTextStyle = GoogleFonts.roboto(
+  color: Colors.white,
+  fontSize: 20,
+  fontWeight: FontWeight.w700,
+);

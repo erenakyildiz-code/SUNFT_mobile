@@ -16,3 +16,21 @@ Future<User?> getUser({String? username, String? address}) async {
   }
   return null;
 }
+//Free functions can be queried.
+Future<String> query(String functionName, List<dynamic> parameters) async{
+  var sucoinBalFunc =  ethereumProvider.suCoinContract.function(functionName);
+  print(parameters);
+  List<dynamic> response;
+  try {
+    response = await ethereumProvider.ethClient.call(contract: ethereumProvider.suCoinContract, function: sucoinBalFunc , params: parameters);
+
+
+  } catch (error, trace) {
+    print(error);
+    print(trace);
+    throw error;
+  }
+
+
+  return response[0].toString();
+}

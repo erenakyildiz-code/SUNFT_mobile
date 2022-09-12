@@ -1,4 +1,4 @@
-const abi ={
+var abi ={
   "address": "0x9D22294b2ea0dC1CA9F20A090Ed3B469fBEe05b6",
   "ABI": [
     {

@@ -4,10 +4,13 @@ import 'package:web3dart/web3dart.dart';
 import "package:properly_made_nft_market/ABIs/nftMarketAbi.dart" as nftMarket;
 import "package:properly_made_nft_market/ABIs/SUcoinAbi.dart" as suCoin;
 
+import "dart:convert";
+
 var httpClient = Client();
-var apiUrl = "https://rpc.ankr.com/avalanche";
+var apiUrl = "https://api.avax-test.network/ext/bc/C/rpc";
 
 var ethClient = Web3Client(apiUrl, httpClient);
 
-var suCoinContract = DeployedContract(ContractAbi.fromJson(suCoin.abi["abi"].toString(), "SUcoin"), EthereumAddress.fromHex(suCoin.abi["address"].toString()));
-var suNFTmarketContract = DeployedContract(ContractAbi.fromJson(nftMarket.abi["abi"].toString(), "Market"), EthereumAddress.fromHex(nftMarket.abi["address"].toString()));
+DeployedContract suCoinContract = DeployedContract(ContractAbi.fromJson(JsonEncoder().convert(suCoin.abi["ABI"]), "SUCOIN"), EthereumAddress.fromHex(suCoin.abi["address"].toString()));
+DeployedContract suNFTmarketContract = DeployedContract(ContractAbi.fromJson(JsonEncoder().convert(nftMarket.abi["ABI"]), "Market"), EthereumAddress.fromHex(nftMarket.abi["address"].toString()));
+

@@ -12,6 +12,7 @@ import 'package:provider/provider.dart';
 import '../../models/User.dart';
 import '../../providers/UserProvider.dart';
 import '../DepositWithdraw.dart';
+import "package:properly_made_nft_market/helpers/marketHelper.dart" as marketHelper;
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -123,28 +124,19 @@ class _ProfilePageState extends State<ProfilePage> with SingleTickerProviderStat
                       Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          GestureDetector(
-                            onTap: ()=>{
-                            Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => DepositWithdraw()
-                            )
-                            )
-                            },
-                            child: Padding(
-                              padding: const EdgeInsets.only(left: 20.0),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    "User Balance",
-                                    style: decoration.balanceSheetText,
-                                    textAlign: TextAlign.start,
-                                  ),
-                                  const Icon(CupertinoIcons.bitcoin,
-                                    color: Colors.white,)
-                                ],
-                              ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 20.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "User Balance",
+                                  style: decoration.balanceSheetText,
+                                  textAlign: TextAlign.start,
+                                ),
+                                const Icon(CupertinoIcons.bitcoin,
+                                  color: Colors.white,)
+                              ],
                             ),
                           ),
                           Padding(
@@ -153,16 +145,29 @@ class _ProfilePageState extends State<ProfilePage> with SingleTickerProviderStat
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 //@TODO Get data from Blockchain
-                                Text(
-                                  "12312321123\$",
-                                  style: decoration.balanceSheetText,
-                                  textAlign: TextAlign.start,
+                                FutureBuilder<String>(
+                                    future: marketHelper.query("getMarketBalance",[]),
+                                    builder: (context, snapshot) {
+                                      if(snapshot.hasData){
+                                        return Text(
+                                          snapshot.data!,
+                                          style: decoration.balanceSheetText,
+                                          textAlign: TextAlign.start,
+                                        );
+                                      }
+                                      else{
+                                        return Text("loading",style: decoration.balanceSheetText,);
+                                      }
+
+                                    }
                                 ),
+
                               ],
                             ),
                           ),
                         ],
                       ),
+
                       Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
@@ -197,8 +202,26 @@ class _ProfilePageState extends State<ProfilePage> with SingleTickerProviderStat
                       ),
                     ],
                   ),
+
                 ],
               ),
+            ),
+            GestureDetector(
+                onTap: ()=>{
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => DepositWithdraw()
+                      )
+                  )
+                },
+                child: Container
+                  (
+                  margin: EdgeInsets.only(top:20),
+                  decoration: decoration.depositPageRouterStyle,
+                  width: MediaQuery.of(context).size.width * 3/ 4,
+                  height: 50,
+                  child: Center(child: Text("Deposit/Withdraw", style: decoration.depositWithdrawTextStyle,)),
+                )
             ),
             //@TODO MOCK ITEM BUILDER, GET DATA FROM DB LATER.
             TabBar(tabs: tabs, controller: _tabController),

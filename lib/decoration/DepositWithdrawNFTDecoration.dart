@@ -26,14 +26,14 @@ var withdrawNFT = GoogleFonts.roboto(
 
 );
 var withdrawButton = BoxDecoration(
-  borderRadius: BorderRadius.all(Radius.circular(20)),
-  color: Color(0x2CFFFFFF)
+    borderRadius: BorderRadius.all(Radius.circular(20)),
+    color: Color(0x2CFFFFFF)
 );
 var inputDecors = InputDecoration(
-  hintText: "Amount",
+  hintText: "Search..",
   border: InputBorder.none,
   suffixIcon: Icon(
-    Icons.attach_money,
+    Icons.search,
     color: loginButtonColors,
   ),
 );
